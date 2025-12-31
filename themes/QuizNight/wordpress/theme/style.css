@@ -1,0 +1,41 @@
+/*
+Theme Name: QuizNight
+Theme URI: https://quiznight.com
+Author: QuizNight Team
+Author URI: https://quiznight.com
+Description: Modern quiz and logic games theme built with Astro + React. Mobile-first, accessible, and performance optimized.
+Version: 1.0.0
+License: MIT
+License URI: https://opensource.org/licenses/MIT
+Text Domain: quiznight
+Tags: quiz, games, logic, trivia, puzzles, interactive, mobile-first
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 8.0
+*/
+
+/*
+ * This theme uses React components for the frontend.
+ * CSS is handled by Tailwind CSS and imported via the React components.
+ * See /wordpress/react-components/ for the compiled React bundles.
+ */
+
+/* Base WordPress compatibility styles */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.wp-admin-bar {
+  display: block !important;
+}
+
+.logged-in .site-header {
+  margin-top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+  .logged-in .site-header {
+    margin-top: 46px;
+  }
+}
