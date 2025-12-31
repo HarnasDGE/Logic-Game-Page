@@ -9,3 +9,4 @@ export { QuizCard, type QuizCardProps } from './QuizCard';
 export { CategoryCard, type CategoryCardProps } from './CategoryCard';
 export { SearchBar, type SearchBarProps } from './SearchBar';
 export { QuizStats, type QuizStatsProps, type StatItemProps } from './QuizStats';
+export { QuizCarousel, type QuizCarouselProps } from './QuizCarousel';
