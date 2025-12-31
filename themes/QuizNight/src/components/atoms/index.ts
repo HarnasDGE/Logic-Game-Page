@@ -10,3 +10,5 @@ export { Input, type InputProps } from './Input';
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, type CardProps } from './Card';
 export { Badge, type BadgeProps } from './Badge';
 export { Icon, type IconProps } from './Icon';
+export { SectionDivider, type SectionDividerProps } from './SectionDivider';
+export { FloatingIcon, type FloatingIconProps } from './FloatingIcon';

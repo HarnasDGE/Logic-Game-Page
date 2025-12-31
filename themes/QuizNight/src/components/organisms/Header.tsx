@@ -1,18 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@components/atoms';
-import { Menu, X, Play } from 'lucide-react';
+import { Menu, X, Play, ChevronDown, User, LogIn, UserPlus, Gamepad2 } from 'lucide-react';
 import { cn } from '@lib/utils/cn';
+import type { QuizCategory } from '@types/index';
 
 export interface HeaderProps {
   className?: string;
 }
 
+const categories: Array<{ name: string; value: QuizCategory; icon: string }> = [
+  { name: 'Trivia', value: 'trivia', icon: '🎯' },
+  { name: 'Logic Puzzles', value: 'logic', icon: '🧩' },
+  { name: 'Math Games', value: 'math', icon: '🔢' },
+  { name: 'Sudoku', value: 'sudoku', icon: '🎲' },
+  { name: 'Crosswords', value: 'crossword', icon: '📝' },
+  { name: 'Riddles', value: 'riddles', icon: '💡' },
+  { name: 'Memory Games', value: 'memory', icon: '🧠' },
+  { name: 'Word Games', value: 'word-games', icon: '📖' },
+];
+
 /**
- * Header Component - Atomic Design: Organism
+ * Enhanced Header Component - Atomic Design: Organism
  *
- * Main navigation header with mobile menu.
- * Sticky header with scroll effects.
- * Mobile-first responsive design.
+ * Main navigation header with:
+ * - Games dropdown menu with categories
+ * - User account dropdown with login/signup
+ * - Mobile-responsive design
+ * - Sticky header with scroll effects
+ * - Animated interactions
  *
  * @example
  * <Header />
@@ -20,6 +35,10 @@ export interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isGamesDropdownOpen, setIsGamesDropdownOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const gamesDropdownRef = useRef<HTMLDivElement>(null);
+  const userDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,10 +49,23 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (gamesDropdownRef.current && !gamesDropdownRef.current.contains(event.target as Node)) {
+        setIsGamesDropdownOpen(false);
+      }
+      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target as Node)) {
+        setIsUserDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'Quizzes', href: '/quizzes' },
-    { label: 'Categories', href: '/categories' },
     { label: 'Leaderboard', href: '/leaderboard' },
     { label: 'About', href: '/about' },
   ];
@@ -51,13 +83,13 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
     >
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo */}
+          {/* Logo with bounce animation */}
           <a
             href="/"
             className="flex items-center gap-2 sm:gap-3 group"
             aria-label="QuizNight Home"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:animate-wiggle transition-transform">
               <Play size={20} fill="white" />
             </div>
             <span className="text-xl sm:text-2xl font-display font-bold text-dark-900">
@@ -66,25 +98,111 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-dark-700 hover:text-primary-600 transition-colors relative group"
+                className="text-sm font-semibold text-dark-700 hover:text-primary-600 transition-colors relative group"
               >
                 {item.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300" />
               </a>
             ))}
+
+            {/* Games Dropdown */}
+            <div className="relative" ref={gamesDropdownRef}>
+              <button
+                onClick={() => setIsGamesDropdownOpen(!isGamesDropdownOpen)}
+                className="flex items-center gap-2 text-sm font-semibold text-dark-700 hover:text-primary-600 transition-colors group"
+              >
+                <Gamepad2 size={18} className="group-hover:animate-wiggle" />
+                Games
+                <ChevronDown
+                  size={16}
+                  className={cn(
+                    'transition-transform duration-200',
+                    isGamesDropdownOpen && 'rotate-180'
+                  )}
+                />
+              </button>
+
+              {/* Games Dropdown Menu */}
+              {isGamesDropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-2xl shadow-card-hover border border-dark-100 overflow-hidden animate-slide-down">
+                  <div className="p-2">
+                    {categories.map((cat) => (
+                      <a
+                        key={cat.value}
+                        href={`/category/${cat.value}`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50 transition-colors group"
+                      >
+                        <span className="text-2xl group-hover:animate-float">{cat.icon}</span>
+                        <span className="text-sm font-medium text-dark-700 group-hover:text-primary-600">
+                          {cat.name}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                  <div className="border-t border-dark-100 p-2">
+                    <a
+                      href="/all-games"
+                      className="block px-4 py-3 text-center text-sm font-semibold text-primary-600 hover:bg-primary-50 rounded-xl transition-colors"
+                    >
+                      View All Games →
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* CTA Buttons */}
+          {/* User Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="ghost" size="md">
-              Sign In
-            </Button>
-            <Button variant="primary" size="md">
+            <div className="relative" ref={userDropdownRef}>
+              <button
+                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-dark-700 hover:bg-dark-100 transition-colors"
+                aria-label="User menu"
+              >
+                <User size={18} />
+                <ChevronDown
+                  size={16}
+                  className={cn(
+                    'transition-transform duration-200',
+                    isUserDropdownOpen && 'rotate-180'
+                  )}
+                />
+              </button>
+
+              {/* User Dropdown Menu */}
+              {isUserDropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-card-hover border border-dark-100 overflow-hidden animate-slide-down">
+                  <div className="p-2">
+                    <a
+                      href="/login"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50 transition-colors group"
+                    >
+                      <LogIn size={18} className="text-dark-600 group-hover:text-primary-600 transition-colors" />
+                      <span className="text-sm font-medium text-dark-700 group-hover:text-primary-600">
+                        Sign In
+                      </span>
+                    </a>
+                    <a
+                      href="/register"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-secondary-50 transition-colors group"
+                    >
+                      <UserPlus size={18} className="text-dark-600 group-hover:text-secondary-600 transition-colors" />
+                      <span className="text-sm font-medium text-dark-700 group-hover:text-secondary-600">
+                        Sign Up
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Button variant="primary" size="md" className="shadow-lg hover:shadow-xl transition-shadow">
               Get Started
             </Button>
           </div>
@@ -104,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
         <div
           className={cn(
             'lg:hidden overflow-hidden transition-all duration-300',
-            isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            isMobileMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
           )}
         >
           <div className="py-4 space-y-2 border-t border-dark-200">
@@ -118,12 +236,35 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
                 {item.label}
               </a>
             ))}
+
+            {/* Mobile Games Section */}
+            <div className="pt-4 border-t border-dark-200">
+              <div className="px-4 py-2 text-xs font-bold text-dark-500 uppercase tracking-wider flex items-center gap-2">
+                <Gamepad2 size={14} />
+                Categories
+              </div>
+              <div className="grid grid-cols-2 gap-2 px-2">
+                {categories.map((cat) => (
+                  <a
+                    key={cat.value}
+                    href={`/category/${cat.value}`}
+                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-dark-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="text-lg">{cat.icon}</span>
+                    <span className="truncate">{cat.name}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile User Actions */}
             <div className="pt-4 px-4 space-y-2 border-t border-dark-200">
-              <Button variant="outline" size="md" className="w-full">
+              <Button variant="outline" size="md" className="w-full" leftIcon={<LogIn size={18} />}>
                 Sign In
               </Button>
-              <Button variant="primary" size="md" className="w-full">
-                Get Started
+              <Button variant="primary" size="md" className="w-full" leftIcon={<UserPlus size={18} />}>
+                Sign Up
               </Button>
             </div>
           </div>
