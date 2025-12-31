@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'hybrid',
+  output: 'server',
   adapter: vercel({
     webAnalytics: {
       enabled: true
@@ -23,34 +23,9 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       exclude: ['@astrojs/react']
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          // Dla WordPress bundle
-          manualChunks: (id) => {
-            if (id.includes('node_modules')) {
-              return 'vendor';
-            }
-            if (id.includes('src/components')) {
-              return 'components';
-            }
-          }
-        }
-      }
     }
   },
   build: {
-    assets: 'assets',
-    inlineStylesheets: 'auto'
-  },
-  image: {
-    service: {
-      entrypoint: 'astro/assets/services/sharp'
-    }
-  },
-  experimental: {
-    responsiveImages: true,
-    svg: true
+    assets: 'assets'
   }
 });
