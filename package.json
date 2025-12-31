@@ -6,10 +6,6 @@
   "scripts": {
     "dev": "cd themes/QuizNight && npm run dev",
     "build": "cd themes/QuizNight && npm install && npm run build",
-    "preview": "cd themes/QuizNight && npm run preview",
-    "postinstall": "cd themes/QuizNight && npm install"
-  },
-  "workspaces": [
-    "themes/QuizNight"
-  ]
+    "preview": "cd themes/QuizNight && npm run preview"
+  }
 }
