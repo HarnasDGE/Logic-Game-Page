@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@lib/utils/cn';
 
 interface QuizFormat {
@@ -9,7 +8,8 @@ interface QuizFormat {
   description: string;
   color: string;
   bgColor: string;
-  example: string;
+  question: string;
+  answers: string[];
 }
 
 export interface QuizCarouselProps {
@@ -24,7 +24,8 @@ const quizFormats: QuizFormat[] = [
     description: 'Test your general knowledge',
     color: 'from-orange-500 to-red-500',
     bgColor: 'bg-orange-50',
-    example: 'Who painted the Mona Lisa?',
+    question: 'Who painted the Mona Lisa?',
+    answers: ['Leonardo da Vinci', 'Pablo Picasso', 'Vincent van Gogh', 'Michelangelo'],
   },
   {
     id: 'true-false',
@@ -33,7 +34,8 @@ const quizFormats: QuizFormat[] = [
     description: 'Quick-fire fact checking',
     color: 'from-blue-500 to-cyan-500',
     bgColor: 'bg-blue-50',
-    example: 'The Earth is flat - True or False?',
+    question: 'The Great Wall of China is visible from space.',
+    answers: ['True', 'False'],
   },
   {
     id: 'multiple',
@@ -42,7 +44,8 @@ const quizFormats: QuizFormat[] = [
     description: 'Pick the right answer',
     color: 'from-purple-500 to-pink-500',
     bgColor: 'bg-purple-50',
-    example: 'What is 2+2? A) 3 B) 4 C) 5',
+    question: 'What is the capital of France?',
+    answers: ['London', 'Berlin', 'Paris', 'Madrid'],
   },
   {
     id: 'puzzle',
@@ -51,7 +54,8 @@ const quizFormats: QuizFormat[] = [
     description: 'Solve brain-bending challenges',
     color: 'from-green-500 to-emerald-500',
     bgColor: 'bg-green-50',
-    example: 'If A>B and B>C, then A__C?',
+    question: 'If all Bloops are Razzies and all Razzies are Lazzies, then all Bloops are definitely:',
+    answers: ['Lazzies', 'Razzies', 'Not Lazzies', 'Cannot be determined'],
   },
   {
     id: 'speed',
@@ -60,7 +64,8 @@ const quizFormats: QuizFormat[] = [
     description: 'Beat the clock!',
     color: 'from-yellow-500 to-orange-500',
     bgColor: 'bg-yellow-50',
-    example: '60 seconds, 20 questions - GO!',
+    question: 'Quick! How many continents are there?',
+    answers: ['5', '6', '7', '8'],
   },
 ];
 
@@ -73,6 +78,11 @@ const quizFormats: QuizFormat[] = [
 export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -99,12 +109,40 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
     setIsAutoPlaying(false);
   };
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrevious();
+    }
+  };
+
   const currentFormat = quizFormats[currentIndex];
 
   return (
     <div className={cn('relative', className)}>
       {/* Main Carousel Card */}
-      <div className="relative overflow-hidden">
+      <div
+        className="relative overflow-hidden"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <div
           className={cn(
             'rounded-3xl p-8 sm:p-12 transition-all duration-500',
@@ -128,32 +166,27 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
               {currentFormat.description}
             </p>
 
-            {/* Example Question */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto border-2 border-dark-200 shadow-lg">
-              <div className="text-sm font-bold text-dark-500 mb-2">Example:</div>
-              <div className="text-lg font-medium text-dark-800 font-mono">
-                "{currentFormat.example}"
+            {/* Quiz Example */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto border-2 border-dark-200 shadow-lg">
+              <div className="text-lg font-bold text-dark-800 mb-4">
+                {currentFormat.question}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {currentFormat.answers.map((answer, index) => (
+                  <div
+                    key={index}
+                    className="bg-white border-2 border-dark-300 rounded-xl p-3 text-left font-medium text-dark-700 hover:border-primary-400 hover:bg-primary-50 transition-all cursor-pointer"
+                  >
+                    <span className="font-bold text-primary-600 mr-2">
+                      {String.fromCharCode(65 + index)}.
+                    </span>
+                    {answer}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-
-        {/* Navigation Arrows */}
-        <button
-          onClick={goToPrevious}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-xl hover:scale-110 transition-transform flex items-center justify-center group"
-          aria-label="Previous quiz format"
-        >
-          <ChevronLeft className="text-dark-700 group-hover:text-primary-600" size={24} />
-        </button>
-
-        <button
-          onClick={goToNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-xl hover:scale-110 transition-transform flex items-center justify-center group"
-          aria-label="Next quiz format"
-        >
-          <ChevronRight className="text-dark-700 group-hover:text-primary-600" size={24} />
-        </button>
       </div>
 
       {/* Dots Indicator */}
@@ -183,7 +216,7 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
               'px-4 py-2 rounded-full text-sm font-semibold transition-all',
               index === currentIndex
                 ? 'bg-gradient-to-r ' + format.color + ' text-white shadow-lg scale-110'
-                : 'bg-white text-dark-700 hover:bg-dark-100 shadow'
+                : 'bg-white text-dark-700 hover:bg-dark-100 shadow hidden sm:inline-block'
             )}
           >
             {format.icon} {format.title}
