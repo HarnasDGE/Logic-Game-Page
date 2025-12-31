@@ -13,7 +13,7 @@ export default {
         '2xl': '1536px',
       },
       colors: {
-        // QuizNight energetic brand colors
+        // LogicLeague energetic brand colors
         primary: {
           50: '#fff7ed',
           100: '#ffedd5',

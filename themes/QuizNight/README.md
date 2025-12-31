@@ -1,4 +1,4 @@
-# QuizNight - Logic Games Template
+# LogicLeague - Logic Games Template
 
 Modern, responsive quiz and logic games template built with Astro and React. Designed for both standalone deployment (Vercel) and WordPress integration.
 
@@ -17,7 +17,7 @@ Modern, responsive quiz and logic games template built with Astro and React. Des
 ## 📁 Project Structure
 
 ```
-themes/QuizNight/
+themes/LogicLeague/
 ├── src/
 │   ├── components/          # React components (Atomic Design)
 │   │   ├── atoms/          # Button, Input, Card, Badge
@@ -43,7 +43,7 @@ themes/QuizNight/
 ### Installation
 
 ```bash
-cd themes/QuizNight
+cd themes/LogicLeague
 npm install
 ```
 
@@ -173,4 +173,4 @@ Built with modern best practices:
 
 ---
 
-Made with ❤️ for the QuizNight community
+Made with ❤️ for the LogicLeague community

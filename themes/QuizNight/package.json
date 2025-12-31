@@ -1,9 +1,9 @@
 {
-  "name": "quiznight",
+  "name": "logicleague",
   "type": "module",
   "version": "1.0.0",
-  "description": "QuizNight - Logic games template for Astro + WordPress",
-  "author": "QuizNight Team",
+  "description": "LogicLeague - Logic games template for Astro + WordPress",
+  "author": "LogicLeague Team",
   "license": "MIT",
   "scripts": {
     "dev": "astro dev",

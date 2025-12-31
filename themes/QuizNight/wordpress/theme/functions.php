@@ -1,8 +1,8 @@
 <?php
 /**
- * QuizNight Theme Functions
+ * LogicLeague Theme Functions
  *
- * @package QuizNight
+ * @package LogicLeague
  * @version 1.0.0
  */
 
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 /**
  * Theme Setup
  */
-function quiznight_setup() {
+function logicleague_setup() {
     // Add theme support
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -32,22 +32,22 @@ function quiznight_setup() {
 
     // Register navigation menus
     register_nav_menus(array(
-        'primary' => __('Primary Menu', 'quiznight'),
-        'footer'  => __('Footer Menu', 'quiznight'),
+        'primary' => __('Primary Menu', 'logicleague'),
+        'footer'  => __('Footer Menu', 'logicleague'),
     ));
 }
-add_action('after_setup_theme', 'quiznight_setup');
+add_action('after_setup_theme', 'logicleague_setup');
 
 /**
  * Enqueue React Components and Styles
  */
-function quiznight_enqueue_scripts() {
+function logicleague_enqueue_scripts() {
     $theme_version = wp_get_theme()->get('Version');
 
     // Enqueue React components bundle
     if (file_exists(get_template_directory() . '/react-components/bundle.js')) {
         wp_enqueue_script(
-            'quiznight-react',
+            'logicleague-react',
             get_template_directory_uri() . '/react-components/bundle.js',
             array(),
             $theme_version,
@@ -58,7 +58,7 @@ function quiznight_enqueue_scripts() {
     // Enqueue styles
     if (file_exists(get_template_directory() . '/react-components/styles.css')) {
         wp_enqueue_style(
-            'quiznight-styles',
+            'logicleague-styles',
             get_template_directory_uri() . '/react-components/styles.css',
             array(),
             $theme_version
@@ -66,31 +66,31 @@ function quiznight_enqueue_scripts() {
     }
 
     // Localize script for WordPress integration
-    wp_localize_script('quiznight-react', 'quiznightData', array(
+    wp_localize_script('logicleague-react', 'logicleagueData', array(
         'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('quiznight_nonce'),
+        'nonce'   => wp_create_nonce('logicleague_nonce'),
         'siteUrl' => get_site_url(),
         'themePath' => get_template_directory_uri(),
     ));
 }
-add_action('wp_enqueue_scripts', 'quiznight_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'logicleague_enqueue_scripts');
 
 /**
  * Register Custom Post Types
  */
-function quiznight_register_post_types() {
+function logicleague_register_post_types() {
     // Quiz Post Type
     register_post_type('quiz', array(
         'labels' => array(
-            'name' => __('Quizzes', 'quiznight'),
-            'singular_name' => __('Quiz', 'quiznight'),
-            'add_new' => __('Add New Quiz', 'quiznight'),
-            'add_new_item' => __('Add New Quiz', 'quiznight'),
-            'edit_item' => __('Edit Quiz', 'quiznight'),
-            'new_item' => __('New Quiz', 'quiznight'),
-            'view_item' => __('View Quiz', 'quiznight'),
-            'search_items' => __('Search Quizzes', 'quiznight'),
-            'not_found' => __('No quizzes found', 'quiznight'),
+            'name' => __('Quizzes', 'logicleague'),
+            'singular_name' => __('Quiz', 'logicleague'),
+            'add_new' => __('Add New Quiz', 'logicleague'),
+            'add_new_item' => __('Add New Quiz', 'logicleague'),
+            'edit_item' => __('Edit Quiz', 'logicleague'),
+            'new_item' => __('New Quiz', 'logicleague'),
+            'view_item' => __('View Quiz', 'logicleague'),
+            'search_items' => __('Search Quizzes', 'logicleague'),
+            'not_found' => __('No quizzes found', 'logicleague'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -100,17 +100,17 @@ function quiznight_register_post_types() {
         'show_in_rest' => true,
     ));
 }
-add_action('init', 'quiznight_register_post_types');
+add_action('init', 'logicleague_register_post_types');
 
 /**
  * Register Taxonomies
  */
-function quiznight_register_taxonomies() {
+function logicleague_register_taxonomies() {
     // Quiz Category
     register_taxonomy('quiz_category', 'quiz', array(
         'labels' => array(
-            'name' => __('Quiz Categories', 'quiznight'),
-            'singular_name' => __('Quiz Category', 'quiznight'),
+            'name' => __('Quiz Categories', 'logicleague'),
+            'singular_name' => __('Quiz Category', 'logicleague'),
         ),
         'hierarchical' => true,
         'rewrite' => array('slug' => 'quiz-category'),
@@ -120,33 +120,33 @@ function quiznight_register_taxonomies() {
     // Quiz Difficulty
     register_taxonomy('quiz_difficulty', 'quiz', array(
         'labels' => array(
-            'name' => __('Difficulty Levels', 'quiznight'),
-            'singular_name' => __('Difficulty Level', 'quiznight'),
+            'name' => __('Difficulty Levels', 'logicleague'),
+            'singular_name' => __('Difficulty Level', 'logicleague'),
         ),
         'hierarchical' => false,
         'rewrite' => array('slug' => 'difficulty'),
         'show_in_rest' => true,
     ));
 }
-add_action('init', 'quiznight_register_taxonomies');
+add_action('init', 'logicleague_register_taxonomies');
 
 /**
  * Add custom meta boxes for quiz data
  */
-function quiznight_add_meta_boxes() {
+function logicleague_add_meta_boxes() {
     add_meta_box(
         'quiz_details',
-        __('Quiz Details', 'quiznight'),
-        'quiznight_quiz_details_callback',
+        __('Quiz Details', 'logicleague'),
+        'logicleague_quiz_details_callback',
         'quiz',
         'normal',
         'high'
     );
 }
-add_action('add_meta_boxes', 'quiznight_add_meta_boxes');
+add_action('add_meta_boxes', 'logicleague_add_meta_boxes');
 
-function quiznight_quiz_details_callback($post) {
-    wp_nonce_field('quiznight_save_quiz_details', 'quiznight_quiz_details_nonce');
+function logicleague_quiz_details_callback($post) {
+    wp_nonce_field('logicleague_save_quiz_details', 'logicleague_quiz_details_nonce');
 
     $questions_count = get_post_meta($post->ID, '_quiz_questions_count', true);
     $estimated_time = get_post_meta($post->ID, '_quiz_estimated_time', true);
@@ -155,28 +155,28 @@ function quiznight_quiz_details_callback($post) {
     ?>
     <table class="form-table">
         <tr>
-            <th><label for="quiz_questions_count"><?php _e('Number of Questions', 'quiznight'); ?></label></th>
+            <th><label for="quiz_questions_count"><?php _e('Number of Questions', 'logicleague'); ?></label></th>
             <td><input type="number" id="quiz_questions_count" name="quiz_questions_count" value="<?php echo esc_attr($questions_count); ?>" min="1" /></td>
         </tr>
         <tr>
-            <th><label for="quiz_estimated_time"><?php _e('Estimated Time (minutes)', 'quiznight'); ?></label></th>
+            <th><label for="quiz_estimated_time"><?php _e('Estimated Time (minutes)', 'logicleague'); ?></label></th>
             <td><input type="number" id="quiz_estimated_time" name="quiz_estimated_time" value="<?php echo esc_attr($estimated_time); ?>" min="1" /></td>
         </tr>
         <tr>
-            <th><label for="quiz_plays"><?php _e('Number of Plays', 'quiznight'); ?></label></th>
+            <th><label for="quiz_plays"><?php _e('Number of Plays', 'logicleague'); ?></label></th>
             <td><input type="number" id="quiz_plays" name="quiz_plays" value="<?php echo esc_attr($plays); ?>" min="0" readonly /></td>
         </tr>
         <tr>
-            <th><label for="quiz_rating"><?php _e('Rating (0-5)', 'quiznight'); ?></label></th>
+            <th><label for="quiz_rating"><?php _e('Rating (0-5)', 'logicleague'); ?></label></th>
             <td><input type="number" id="quiz_rating" name="quiz_rating" value="<?php echo esc_attr($rating); ?>" min="0" max="5" step="0.1" /></td>
         </tr>
     </table>
     <?php
 }
 
-function quiznight_save_quiz_details($post_id) {
-    if (!isset($_POST['quiznight_quiz_details_nonce']) ||
-        !wp_verify_nonce($_POST['quiznight_quiz_details_nonce'], 'quiznight_save_quiz_details')) {
+function logicleague_save_quiz_details($post_id) {
+    if (!isset($_POST['logicleague_quiz_details_nonce']) ||
+        !wp_verify_nonce($_POST['logicleague_quiz_details_nonce'], 'logicleague_save_quiz_details')) {
         return;
     }
 
@@ -200,21 +200,21 @@ function quiznight_save_quiz_details($post_id) {
         update_post_meta($post_id, '_quiz_rating', sanitize_text_field($_POST['quiz_rating']));
     }
 }
-add_action('save_post_quiz', 'quiznight_save_quiz_details');
+add_action('save_post_quiz', 'logicleague_save_quiz_details');
 
 /**
  * REST API: Get quizzes endpoint
  */
-function quiznight_register_rest_routes() {
-    register_rest_route('quiznight/v1', '/quizzes', array(
+function logicleague_register_rest_routes() {
+    register_rest_route('logicleague/v1', '/quizzes', array(
         'methods' => 'GET',
-        'callback' => 'quiznight_get_quizzes',
+        'callback' => 'logicleague_get_quizzes',
         'permission_callback' => '__return_true',
     ));
 }
-add_action('rest_api_init', 'quiznight_register_rest_routes');
+add_action('rest_api_init', 'logicleague_register_rest_routes');
 
-function quiznight_get_quizzes($request) {
+function logicleague_get_quizzes($request) {
     $args = array(
         'post_type' => 'quiz',
         'posts_per_page' => $request->get_param('per_page') ?: 10,

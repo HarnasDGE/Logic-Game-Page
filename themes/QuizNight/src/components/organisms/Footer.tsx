@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
     { icon: Github, href: 'https://github.com', label: 'GitHub' },
     { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:hello@quiznight.com', label: 'Email' },
+    { icon: Mail, href: 'mailto:hello@logicleague.com', label: 'Email' },
   ];
 
   return (
@@ -64,7 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                 <Play size={20} fill="white" />
               </div>
               <span className="text-2xl font-display font-bold text-white">
-                Quiz<span className="text-primary-400">Night</span>
+                Logic<span className="text-primary-400">League</span>
               </span>
             </a>
             <p className="text-dark-400 mb-6 max-w-sm">
@@ -116,7 +116,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
         <div className="pt-8 border-t border-dark-800">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-dark-400 text-center sm:text-left">
-              © {currentYear} QuizNight. All rights reserved.
+              © {currentYear} LogicLeague. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-dark-400">
               <a href="/sitemap" className="hover:text-primary-400 transition-colors">

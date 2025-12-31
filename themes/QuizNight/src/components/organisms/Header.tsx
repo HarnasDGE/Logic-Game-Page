@@ -87,13 +87,13 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
           <a
             href="/"
             className="flex items-center gap-2 sm:gap-3 group"
-            aria-label="QuizNight Home"
+            aria-label="LogicLeague Home"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:animate-wiggle transition-transform">
               <Play size={20} fill="white" />
             </div>
             <span className="text-xl sm:text-2xl font-display font-bold text-dark-900">
-              Quiz<span className="text-primary-600">Night</span>
+              Logic<span className="text-primary-600">League</span>
             </span>
           </a>
 
