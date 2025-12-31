@@ -78,8 +78,10 @@ const quizFormats: QuizFormat[] = [
 export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
@@ -111,25 +113,60 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
+    setTouchStart({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    });
+    setIsDragging(true);
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+    if (!touchStart) return;
+
+    const currentTouch = {
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    };
+
+    setTouchEnd(currentTouch);
+
+    const deltaX = currentTouch.x - touchStart.x;
+    const deltaY = currentTouch.y - touchStart.y;
+
+    // Check if horizontal swipe is more dominant than vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Prevent vertical scroll when swiping horizontally
+      e.preventDefault();
+      setDragOffset(deltaX);
+    }
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      goToNext();
-    } else if (isRightSwipe) {
-      goToPrevious();
+    if (!touchStart || !touchEnd) {
+      setIsDragging(false);
+      setDragOffset(0);
+      return;
     }
+
+    const deltaX = touchStart.x - touchEnd.x;
+    const deltaY = touchStart.y - touchEnd.y;
+
+    // Only trigger swipe if horizontal movement is more than vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      const isLeftSwipe = deltaX > minSwipeDistance;
+      const isRightSwipe = deltaX < -minSwipeDistance;
+
+      if (isLeftSwipe) {
+        goToNext();
+      } else if (isRightSwipe) {
+        goToPrevious();
+      }
+    }
+
+    setIsDragging(false);
+    setDragOffset(0);
+    setTouchStart(null);
+    setTouchEnd(null);
   };
 
   const currentFormat = quizFormats[currentIndex];
@@ -138,36 +175,56 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
     <div className={cn('relative', className)}>
       {/* Main Carousel Card */}
       <div
-        className="relative overflow-hidden"
+        className="relative overflow-hidden touch-pan-y"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        style={{
+          touchAction: 'pan-y',
+        }}
       >
         <div
           className={cn(
-            'rounded-3xl p-8 sm:p-12 transition-all duration-500',
+            'rounded-3xl p-8 sm:p-12 transition-all',
             currentFormat.bgColor,
-            'border-4 border-white shadow-2xl'
+            'border-4 border-white shadow-2xl',
+            isDragging ? 'duration-100' : 'duration-500 ease-out'
           )}
+          style={{
+            transform: isDragging ? `translateX(${dragOffset}px) scale(${1 - Math.abs(dragOffset) / 2000})` : 'translateX(0) scale(1)',
+            opacity: isDragging ? 1 - Math.abs(dragOffset) / 1000 : 1,
+          }}
         >
           {/* Format Content */}
           <div className="text-center">
-            <div className="text-8xl mb-4 animate-bounce-slow">{currentFormat.icon}</div>
+            <div className={cn(
+              'text-8xl mb-4 transition-transform duration-300',
+              isDragging ? 'scale-90' : 'scale-100 animate-bounce-slow'
+            )}>
+              {currentFormat.icon}
+            </div>
 
             <div className={cn(
               'inline-block text-4xl sm:text-5xl font-display font-bold mb-4',
-              'bg-gradient-to-r bg-clip-text text-transparent',
-              currentFormat.color
+              'bg-gradient-to-r bg-clip-text text-transparent transition-all duration-300',
+              currentFormat.color,
+              isDragging && 'blur-[1px]'
             )}>
               {currentFormat.title}
             </div>
 
-            <p className="text-xl sm:text-2xl text-dark-700 font-semibold mb-6">
+            <p className={cn(
+              'text-xl sm:text-2xl text-dark-700 font-semibold mb-6 transition-all duration-300',
+              isDragging && 'opacity-70'
+            )}>
               {currentFormat.description}
             </p>
 
             {/* Quiz Example */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto border-2 border-dark-200 shadow-lg">
+            <div className={cn(
+              'bg-white/80 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto border-2 border-dark-200 shadow-lg transition-all duration-300',
+              isDragging && 'opacity-70 scale-95'
+            )}>
               <div className="text-lg font-bold text-dark-800 mb-4">
                 {currentFormat.question}
               </div>
@@ -196,10 +253,10 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
             key={format.id}
             onClick={() => goToSlide(index)}
             className={cn(
-              'transition-all duration-300',
+              'transition-all duration-500 ease-out',
               index === currentIndex
-                ? 'w-8 h-3 rounded-full bg-gradient-to-r ' + format.color
-                : 'w-3 h-3 rounded-full bg-dark-300 hover:bg-dark-400'
+                ? 'w-8 h-3 rounded-full bg-gradient-to-r ' + format.color + ' animate-pulse'
+                : 'w-3 h-3 rounded-full bg-dark-300 hover:bg-dark-400 hover:scale-125'
             )}
             aria-label={`Go to ${format.title}`}
           />
@@ -213,13 +270,19 @@ export const QuizCarousel: React.FC<QuizCarouselProps> = ({ className }) => {
             key={format.id}
             onClick={() => goToSlide(index)}
             className={cn(
-              'px-4 py-2 rounded-full text-sm font-semibold transition-all',
+              'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300',
               index === currentIndex
-                ? 'bg-gradient-to-r ' + format.color + ' text-white shadow-lg scale-110'
-                : 'bg-white text-dark-700 hover:bg-dark-100 shadow hidden sm:inline-block'
+                ? 'bg-gradient-to-r ' + format.color + ' text-white shadow-lg scale-110 animate-pulse-glow'
+                : 'bg-white text-dark-700 hover:bg-dark-100 hover:scale-105 shadow hidden sm:inline-block'
             )}
           >
-            {format.icon} {format.title}
+            <span className={cn(
+              'inline-block transition-transform duration-300',
+              index === currentIndex && 'animate-wiggle'
+            )}>
+              {format.icon}
+            </span>{' '}
+            {format.title}
           </button>
         ))}
       </div>
