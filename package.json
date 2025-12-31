@@ -1,0 +1,15 @@
+{
+  "name": "logic-game-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Logic Game Page - QuizNight Theme",
+  "scripts": {
+    "dev": "cd themes/QuizNight && npm run dev",
+    "build": "cd themes/QuizNight && npm install && npm run build",
+    "preview": "cd themes/QuizNight && npm run preview",
+    "postinstall": "cd themes/QuizNight && npm install"
+  },
+  "workspaces": [
+    "themes/QuizNight"
+  ]
+}

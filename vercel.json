@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "themes/QuizNight/.vercel/output",
+  "installCommand": "npm install",
+  "framework": null,
+  "github": {
+    "silent": true
+  }
+}
