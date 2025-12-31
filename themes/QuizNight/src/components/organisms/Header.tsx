@@ -73,11 +73,11 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50',
+        'fixed top-0 left-0 right-0 z-[100]',
         'transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
-          : 'bg-transparent',
+          ? 'bg-white/98 backdrop-blur-md shadow-lg'
+          : 'bg-white/80 backdrop-blur-sm',
         className
       )}
     >
@@ -129,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
 
               {/* Games Dropdown Menu */}
               {isGamesDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-2xl shadow-card-hover border border-dark-100 overflow-hidden animate-slide-down">
+                <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border-2 border-dark-100 overflow-hidden animate-slide-down z-[110]">
                   <div className="p-2">
                     {categories.map((cat) => (
                       <a
@@ -177,7 +177,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
 
               {/* User Dropdown Menu */}
               {isUserDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-card-hover border border-dark-100 overflow-hidden animate-slide-down">
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border-2 border-dark-100 overflow-hidden animate-slide-down z-[110]">
                   <div className="p-2">
                     <a
                       href="/login"
