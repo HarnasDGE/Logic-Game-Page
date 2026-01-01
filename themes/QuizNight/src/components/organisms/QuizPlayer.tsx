@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@lib/utils/cn';
+import { AdSlot } from '@components/molecules/AdSlot';
 
 interface Question {
   id: number;
@@ -65,17 +66,13 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ quiz }) => {
   };
 
   const handleAnswerSelect = (answerIndex: number) => {
-    if (showFeedback) return; // Prevent changing answer after submission
+    if (showFeedback) return; // Prevent changing answer after auto-submission
+
     setSelectedAnswer(answerIndex);
-  };
-
-  const handleSubmitAnswer = () => {
-    if (selectedAnswer === null) return;
-
     setShowFeedback(true);
 
     // Check if answer is correct
-    if (selectedAnswer === currentQuestion.correctAnswer) {
+    if (answerIndex === currentQuestion.correctAnswer) {
       setScore(score + 1);
     }
 
@@ -261,30 +258,17 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ quiz }) => {
           })}
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-8 flex gap-4">
-          {!showFeedback ? (
-            <button
-              onClick={handleSubmitAnswer}
-              disabled={selectedAnswer === null}
-              className={cn(
-                'flex-1 px-6 py-3 font-semibold rounded-lg transition-all',
-                selectedAnswer !== null
-                  ? 'bg-primary-600 hover:bg-primary-700 text-white'
-                  : 'bg-dark-200 text-dark-400 cursor-not-allowed'
-              )}
-            >
-              Submit Answer
-            </button>
-          ) : (
+        {/* Next Button - Only show after answer is selected */}
+        {showFeedback && (
+          <div className="mt-8">
             <button
               onClick={handleNextQuestion}
-              className="flex-1 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all"
+              className="w-full px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all"
             >
               {currentQuestionIndex < quiz.questions.length - 1 ? 'Next Question →' : 'See Results'}
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Feedback Message */}
         {showFeedback && (
@@ -302,6 +286,16 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ quiz }) => {
           </div>
         )}
       </div>
+
+      {/* Ad every 3 questions */}
+      {showFeedback && (currentQuestionIndex + 1) % 3 === 0 && (
+        <div className="my-8 flex justify-center">
+          <AdSlot
+            format="banner"
+            slotId={`quiz-question-ad-${currentQuestionIndex + 1}`}
+          />
+        </div>
+      )}
 
       {/* Score Display */}
       <div className="bg-white rounded-xl shadow p-4 text-center">
