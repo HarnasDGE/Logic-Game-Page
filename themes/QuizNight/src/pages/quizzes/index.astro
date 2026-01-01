@@ -2,10 +2,22 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { Header } from '@components/organisms/Header';
 import { Footer } from '@components/organisms/Footer';
-import { QuizCard } from '@components/molecules/QuizCard';
 import { AdSlot } from '@components/molecules/AdSlot';
 import { SearchBar } from '@components/molecules/SearchBar';
-import type { Quiz } from '@types/index';
+
+// Quiz type definition
+interface Quiz {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  questionsCount: number;
+  timeLimit: number;
+  thumbnail: string;
+  plays: number;
+  rating: number;
+}
 
 // Mock quiz data - this would come from WordPress/API
 const allQuizzes: Quiz[] = [
@@ -206,19 +218,57 @@ const allQuizzes: Quiz[] = [
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {allQuizzes.map((quiz, index) => (
           <>
-            <QuizCard
-              client:visible
-              id={quiz.id}
-              title={quiz.title}
-              description={quiz.description}
-              category={quiz.category}
-              difficulty={quiz.difficulty}
-              questionsCount={quiz.questionsCount}
-              timeLimit={quiz.timeLimit}
-              thumbnail={quiz.thumbnail}
-              plays={quiz.plays}
-              rating={quiz.rating}
-            />
+            <a
+              href={`/quizzes/${quiz.id}`}
+              class="group bg-white rounded-2xl p-6 border-2 border-dark-100 hover:border-primary-300 hover:shadow-xl transition-all cursor-pointer block"
+            >
+              <!-- Icon -->
+              <div class="text-6xl mb-4">{quiz.thumbnail}</div>
+
+              <!-- Category and Difficulty -->
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-semibold capitalize">
+                  {quiz.category}
+                </span>
+                <span class={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${
+                  quiz.difficulty === 'easy' ? 'bg-accent-100 text-accent-700' :
+                  quiz.difficulty === 'medium' ? 'bg-secondary-100 text-secondary-700' :
+                  'bg-primary-100 text-primary-700'
+                }`}>
+                  {quiz.difficulty}
+                </span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-xl font-display font-bold text-dark-900 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">
+                {quiz.title}
+              </h3>
+
+              <!-- Description -->
+              <p class="text-sm text-dark-600 mb-4 line-clamp-2">{quiz.description}</p>
+
+              <!-- Meta info -->
+              <div class="flex items-center gap-4 mb-4 text-sm text-dark-600">
+                <div class="flex items-center gap-1.5">
+                  <span>👥</span>
+                  <span>{quiz.plays.toLocaleString()}</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span>⏱️</span>
+                  <span>{quiz.timeLimit} min</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span>⭐</span>
+                  <span>{quiz.rating}</span>
+                </div>
+              </div>
+
+              <!-- Play button -->
+              <div class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all group-hover:scale-105">
+                <span>▶</span>
+                Play Now
+              </div>
+            </a>
 
             <!-- Insert rectangle ad after every 6 quizzes -->
             {(index + 1) % 6 === 0 && (

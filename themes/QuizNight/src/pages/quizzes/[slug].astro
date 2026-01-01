@@ -7,25 +7,213 @@ import { AdSlot } from '@components/molecules/AdSlot';
 import { QuizStats } from '@components/molecules/QuizStats';
 import { Play, Clock, Target, Users, Star, Share2, Bookmark } from 'lucide-react';
 
+// Export getStaticPaths for static generation
+export function getStaticPaths() {
+  return [
+    { params: { slug: '1' } },
+    { params: { slug: '2' } },
+    { params: { slug: '3' } },
+    { params: { slug: '4' } },
+    { params: { slug: '5' } },
+    { params: { slug: '6' } },
+    { params: { slug: '7' } },
+    { params: { slug: '8' } },
+    { params: { slug: '9' } },
+    { params: { slug: '10' } },
+    { params: { slug: '11' } },
+    { params: { slug: '12' } },
+  ];
+}
+
 // Get slug from URL params
 const { slug } = Astro.params;
 
-// Mock quiz data - this would come from WordPress/API
-const quiz = {
-  id: slug,
-  title: 'World Capitals Challenge',
-  description: 'Test your knowledge of capital cities from around the globe! From Europe to Asia, Africa to the Americas, can you name them all? This comprehensive quiz will challenge even the most seasoned geography enthusiasts.',
-  category: 'Geography',
-  difficulty: 'medium',
-  questionsCount: 20,
-  timeLimit: 10,
-  thumbnail: '🌍',
-  plays: 1250,
-  rating: 4.5,
-  author: 'Quiz Master',
-  createdAt: '2024-01-15',
-  tags: ['Geography', 'Capitals', 'World', 'Cities'],
+// All available quizzes - this would come from WordPress/API
+const allQuizzes = {
+  '1': {
+    id: '1',
+    title: 'World Capitals Challenge',
+    description: 'Test your knowledge of capital cities from around the globe! From Europe to Asia, Africa to the Americas, can you name them all? This comprehensive quiz will challenge even the most seasoned geography enthusiasts.',
+    category: 'Geography',
+    difficulty: 'medium' as const,
+    questionsCount: 20,
+    timeLimit: 10,
+    thumbnail: '🌍',
+    plays: 1250,
+    rating: 4.5,
+    author: 'Quiz Master',
+    createdAt: '2024-01-15',
+    tags: ['Geography', 'Capitals', 'World', 'Cities'],
+  },
+  '2': {
+    id: '2',
+    title: 'Movie Quotes Trivia',
+    description: 'Can you identify these famous movie quotes? From classic cinema to modern blockbusters, test your movie knowledge with this entertaining quiz. Perfect for film buffs and casual moviegoers alike!',
+    category: 'Entertainment',
+    difficulty: 'easy' as const,
+    questionsCount: 15,
+    timeLimit: 8,
+    thumbnail: '🎬',
+    plays: 890,
+    rating: 4.7,
+    author: 'Cinema Guru',
+    createdAt: '2024-01-20',
+    tags: ['Movies', 'Quotes', 'Cinema', 'Entertainment'],
+  },
+  '3': {
+    id: '3',
+    title: 'Science Facts Quiz',
+    description: 'Explore fascinating facts about physics, chemistry, and biology. From the smallest atoms to the vastness of space, discover the wonders of science in this comprehensive quiz.',
+    category: 'Science',
+    difficulty: 'hard' as const,
+    questionsCount: 25,
+    timeLimit: 12,
+    thumbnail: '🔬',
+    plays: 670,
+    rating: 4.8,
+    author: 'Dr. Science',
+    createdAt: '2024-01-18',
+    tags: ['Science', 'Physics', 'Chemistry', 'Biology'],
+  },
+  '4': {
+    id: '4',
+    title: 'Classic Brain Teasers',
+    description: 'Traditional riddles that will make you think outside the box. These time-tested puzzles have challenged minds for generations. Can you solve them all?',
+    category: 'Riddles',
+    difficulty: 'medium' as const,
+    questionsCount: 12,
+    timeLimit: 15,
+    thumbnail: '🧩',
+    plays: 2100,
+    rating: 4.6,
+    author: 'Riddle Master',
+    createdAt: '2024-01-22',
+    tags: ['Riddles', 'Logic', 'Brain Teasers', 'Puzzles'],
+  },
+  '5': {
+    id: '5',
+    title: 'Math Logic Puzzles',
+    description: 'Solve these mathematical riddles using logic and reasoning. Perfect for those who love numbers and logical thinking. Sharpen your analytical skills!',
+    category: 'Math',
+    difficulty: 'hard' as const,
+    questionsCount: 18,
+    timeLimit: 20,
+    thumbnail: '➗',
+    plays: 540,
+    rating: 4.9,
+    author: 'Math Wizard',
+    createdAt: '2024-01-25',
+    tags: ['Math', 'Logic', 'Numbers', 'Problem Solving'],
+  },
+  '6': {
+    id: '6',
+    title: 'Quick Riddles for Kids',
+    description: 'Fun and easy riddles perfect for younger minds. Educational and entertaining, these puzzles help develop critical thinking skills while having fun!',
+    category: 'Kids',
+    difficulty: 'easy' as const,
+    questionsCount: 10,
+    timeLimit: 5,
+    thumbnail: '🎈',
+    plays: 1830,
+    rating: 4.4,
+    author: 'Kids Corner',
+    createdAt: '2024-01-28',
+    tags: ['Kids', 'Easy', 'Fun', 'Educational'],
+  },
+  '7': {
+    id: '7',
+    title: 'Daily Mini Crossword',
+    description: 'Quick 5x5 crossword puzzle to start your day. Perfect for your morning coffee break! Fresh puzzles added daily.',
+    category: 'Crossword',
+    difficulty: 'easy' as const,
+    questionsCount: 8,
+    timeLimit: 7,
+    thumbnail: '📝',
+    plays: 3200,
+    rating: 4.7,
+    author: 'Crossword Creator',
+    createdAt: '2024-01-30',
+    tags: ['Crossword', 'Daily', 'Quick', 'Words'],
+  },
+  '8': {
+    id: '8',
+    title: 'Movie & TV Crossword',
+    description: 'All clues are about your favorite shows and films. Test your entertainment knowledge with this themed crossword puzzle!',
+    category: 'Crossword',
+    difficulty: 'medium' as const,
+    questionsCount: 15,
+    timeLimit: 15,
+    thumbnail: '📺',
+    plays: 1450,
+    rating: 4.5,
+    author: 'TV Buff',
+    createdAt: '2024-02-01',
+    tags: ['Crossword', 'Movies', 'TV', 'Entertainment'],
+  },
+  '9': {
+    id: '9',
+    title: 'History Masters Quiz',
+    description: 'Journey through time with questions spanning ancient to modern history. From civilizations to world wars, test your historical knowledge!',
+    category: 'History',
+    difficulty: 'hard' as const,
+    questionsCount: 30,
+    timeLimit: 18,
+    thumbnail: '📚',
+    plays: 820,
+    rating: 4.8,
+    author: 'History Professor',
+    createdAt: '2024-02-03',
+    tags: ['History', 'Ancient', 'Modern', 'World'],
+  },
+  '10': {
+    id: '10',
+    title: 'Sports Legends Trivia',
+    description: 'Test your sports knowledge across football, basketball, and more! From legendary athletes to memorable moments in sports history.',
+    category: 'Sports',
+    difficulty: 'medium' as const,
+    questionsCount: 20,
+    timeLimit: 12,
+    thumbnail: '⚽',
+    plays: 1650,
+    rating: 4.6,
+    author: 'Sports Fan',
+    createdAt: '2024-02-05',
+    tags: ['Sports', 'Athletes', 'Football', 'Basketball'],
+  },
+  '11': {
+    id: '11',
+    title: 'Music Through the Decades',
+    description: 'From the 60s to today, how well do you know music history? Test your knowledge of artists, albums, and iconic songs.',
+    category: 'Music',
+    difficulty: 'medium' as const,
+    questionsCount: 22,
+    timeLimit: 15,
+    thumbnail: '🎵',
+    plays: 1120,
+    rating: 4.7,
+    author: 'Music Lover',
+    createdAt: '2024-02-07',
+    tags: ['Music', 'History', 'Artists', 'Songs'],
+  },
+  '12': {
+    id: '12',
+    title: 'Geography Expert Challenge',
+    description: 'Advanced geography questions for true map lovers. From topography to demographics, this quiz covers it all!',
+    category: 'Geography',
+    difficulty: 'hard' as const,
+    questionsCount: 28,
+    timeLimit: 20,
+    thumbnail: '🗺️',
+    plays: 560,
+    rating: 4.9,
+    author: 'Geo Expert',
+    createdAt: '2024-02-09',
+    tags: ['Geography', 'Advanced', 'Maps', 'World'],
+  },
 };
+
+// Get quiz by slug or use default
+const quiz = allQuizzes[slug as keyof typeof allQuizzes] || allQuizzes['1'];
 
 const difficultyColors = {
   easy: 'bg-accent-100 text-accent-700',
@@ -222,41 +410,25 @@ const stats = [
               You Might Also Like
             </h3>
             <div class="space-y-4">
-              <a href="/quizzes/country-flags" class="block group">
-                <div class="flex gap-3">
-                  <div class="text-3xl">🏳️</div>
-                  <div>
-                    <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
-                      Country Flags Quiz
-                    </h4>
-                    <p class="text-xs text-dark-600">15 questions • Medium</p>
-                  </div>
-                </div>
-              </a>
-
-              <a href="/quizzes/european-capitals" class="block group">
-                <div class="flex gap-3">
-                  <div class="text-3xl">🇪🇺</div>
-                  <div>
-                    <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
-                      European Capitals
-                    </h4>
-                    <p class="text-xs text-dark-600">20 questions • Easy</p>
-                  </div>
-                </div>
-              </a>
-
-              <a href="/quizzes/world-landmarks" class="block group">
-                <div class="flex gap-3">
-                  <div class="text-3xl">🗼</div>
-                  <div>
-                    <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
-                      World Landmarks
-                    </h4>
-                    <p class="text-xs text-dark-600">18 questions • Medium</p>
-                  </div>
-                </div>
-              </a>
+              {Object.values(allQuizzes)
+                .filter(q => q.id !== quiz.id && (q.category === quiz.category || q.difficulty === quiz.difficulty))
+                .slice(0, 3)
+                .map(relatedQuiz => (
+                  <a href={`/quizzes/${relatedQuiz.id}`} class="block group">
+                    <div class="flex gap-3">
+                      <div class="text-3xl">{relatedQuiz.thumbnail}</div>
+                      <div>
+                        <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
+                          {relatedQuiz.title}
+                        </h4>
+                        <p class="text-xs text-dark-600">
+                          {relatedQuiz.questionsCount} questions • {relatedQuiz.difficulty.charAt(0).toUpperCase() + relatedQuiz.difficulty.slice(1)}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))
+              }
             </div>
           </div>
         </aside>

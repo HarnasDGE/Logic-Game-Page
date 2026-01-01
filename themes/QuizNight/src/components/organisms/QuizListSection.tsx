@@ -66,9 +66,10 @@ export const QuizListSection: React.FC<QuizListSectionProps> = ({
         {/* Quiz grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quizzes.map((quiz) => (
-            <div
+            <a
               key={quiz.id}
-              className="group bg-white rounded-2xl p-6 border-2 border-dark-100 hover:border-primary-300 hover:shadow-xl transition-all cursor-pointer"
+              href={`/quizzes/${quiz.id}`}
+              className="group bg-white rounded-2xl p-6 border-2 border-dark-100 hover:border-primary-300 hover:shadow-xl transition-all cursor-pointer block"
             >
               {/* Icon */}
               <div className="text-6xl mb-4">{quiz.icon}</div>
@@ -102,11 +103,11 @@ export const QuizListSection: React.FC<QuizListSectionProps> = ({
               </div>
 
               {/* Play button */}
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all group-hover:scale-105">
+              <div className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all group-hover:scale-105">
                 <Play size={18} fill="white" />
                 Play Now
-              </button>
-            </div>
+              </div>
+            </a>
           ))}
         </div>
 
