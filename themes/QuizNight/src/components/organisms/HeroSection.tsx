@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@components/atoms';
-import { Play } from 'lucide-react';
+import { Play, Star, Users, Award, TrendingUp } from 'lucide-react';
 import { cn } from '@lib/utils/cn';
 
 export interface HeroSectionProps {
@@ -42,9 +42,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               Szare Komórki!
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/90 font-medium">
-              Witaj w LogicLeague.
+            <p className="text-lg sm:text-xl text-white/90 font-medium leading-relaxed">
+              Witaj w LogicLeague - najlepszej platformie do rozwijania umysłu poprzez zabawę!
+              Dołącz do społeczności miłośników wiedzy i sprawdź się w tysiącach quizów z każdej dziedziny.
             </p>
+
+            {/* Features list */}
+            <div className="space-y-3 py-2">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-accent-400 flex items-center justify-center flex-shrink-0">
+                  <Award size={16} className="text-dark-900" />
+                </div>
+                <span className="text-white/95 font-medium">Ponad 10,000 unikalnych quizów</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-accent-400 flex items-center justify-center flex-shrink-0">
+                  <TrendingUp size={16} className="text-dark-900" />
+                </div>
+                <span className="text-white/95 font-medium">Rywalizacja na żywo z innymi graczami</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-accent-400 flex items-center justify-center flex-shrink-0">
+                  <Star size={16} className="text-dark-900" fill="currentColor" />
+                </div>
+                <span className="text-white/95 font-medium">Zdobywaj odznaki i nagrody</span>
+              </div>
+            </div>
 
             <div className="pt-4">
               <Button
@@ -55,6 +78,52 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               >
                 Zacznij Szybki Quiz Teraz!
               </Button>
+            </div>
+
+            {/* Social Proof */}
+            <div className="pt-6 border-t border-white/20">
+              <div className="grid grid-cols-3 gap-6">
+                <div>
+                  <div className="flex items-center gap-1 mb-1">
+                    <Star size={18} fill="#facc15" className="text-accent-400" />
+                    <Star size={18} fill="#facc15" className="text-accent-400" />
+                    <Star size={18} fill="#facc15" className="text-accent-400" />
+                    <Star size={18} fill="#facc15" className="text-accent-400" />
+                    <Star size={18} fill="#facc15" className="text-accent-400" />
+                  </div>
+                  <p className="text-sm text-white/80">4.9/5 średnia ocena</p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Users size={18} className="text-accent-400" />
+                    <span className="text-2xl font-bold">500K+</span>
+                  </div>
+                  <p className="text-sm text-white/80">Aktywnych graczy</p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Award size={18} className="text-accent-400" />
+                    <span className="text-2xl font-bold">1M+</span>
+                  </div>
+                  <p className="text-sm text-white/80">Rozegranych gier</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Trust badges */}
+            <div className="flex flex-wrap items-center gap-4 pt-4">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span className="text-accent-400 text-xl">✓</span>
+                <span className="text-sm font-medium text-white/90">100% Darmowe</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span className="text-accent-400 text-xl">✓</span>
+                <span className="text-sm font-medium text-white/90">Bez Reklam</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span className="text-accent-400 text-xl">✓</span>
+                <span className="text-sm font-medium text-white/90">Graj Offline</span>
+              </div>
             </div>
           </div>
 
