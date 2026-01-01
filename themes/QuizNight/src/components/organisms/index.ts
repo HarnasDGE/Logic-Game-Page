@@ -11,3 +11,6 @@ export { HeroSection, type HeroSectionProps } from './HeroSection';
 export { QuizGrid, type QuizGridProps } from './QuizGrid';
 export { CategoryGrid, type CategoryGridProps } from './CategoryGrid';
 export { RankingCTA, type RankingCTAProps } from './RankingCTA';
+export { NewsletterSection, type NewsletterSectionProps } from './NewsletterSection';
+export { PlatformStats, type PlatformStatsProps } from './PlatformStats';
+export { QuickPlayCTA, type QuickPlayCTAProps } from './QuickPlayCTA';

@@ -3,7 +3,10 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { Header } from '@components/organisms/Header';
 import { HeroSection } from '@components/organisms/HeroSection';
 import { RankingCTA } from '@components/organisms/RankingCTA';
+import { PlatformStats } from '@components/organisms/PlatformStats';
 import { CategoryGrid } from '@components/organisms/CategoryGrid';
+import { QuickPlayCTA } from '@components/organisms/QuickPlayCTA';
+import { NewsletterSection } from '@components/organisms/NewsletterSection';
 import { Footer } from '@components/organisms/Footer';
 ---
 
@@ -18,8 +21,17 @@ import { Footer } from '@components/organisms/Footer';
     <!-- Ranking CTA -->
     <RankingCTA client:visible />
 
+    <!-- Platform Stats -->
+    <PlatformStats client:visible />
+
     <!-- Categories -->
     <CategoryGrid client:visible />
+
+    <!-- Quick Play CTA -->
+    <QuickPlayCTA client:visible />
+
+    <!-- Newsletter -->
+    <NewsletterSection client:visible />
   </main>
 
   <!-- Footer -->
