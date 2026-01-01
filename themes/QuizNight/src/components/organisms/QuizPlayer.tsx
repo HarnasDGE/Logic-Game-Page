@@ -287,8 +287,8 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ quiz }) => {
         )}
       </div>
 
-      {/* Ad every 3 questions */}
-      {showFeedback && (currentQuestionIndex + 1) % 3 === 0 && (
+      {/* Ad on question 1, then every 3 questions (1, 3, 6, 9, 12...) */}
+      {showFeedback && ((currentQuestionIndex + 1) === 1 || (currentQuestionIndex + 1) % 3 === 0) && (
         <div className="my-8 flex justify-center">
           <AdSlot
             format="banner"
