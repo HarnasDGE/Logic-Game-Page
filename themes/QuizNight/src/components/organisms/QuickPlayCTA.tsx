@@ -39,19 +39,19 @@ export const QuickPlayCTA: React.FC<QuickPlayCTAProps> = ({ className }) => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold text-sm mb-6">
             <Sparkles size={16} />
-            <span>Gotowy na wyzwanie?</span>
+            <span>Ready for a challenge?</span>
           </div>
 
           {/* Heading */}
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-            Sprawdź Swoją Wiedzę<br className="hidden sm:block" />
-            Już Teraz!
+            Test Your Knowledge<br className="hidden sm:block" />
+            Right Now!
           </h2>
 
           {/* Description */}
           <p className="text-lg sm:text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-            Nie czekaj! Wybierz swój pierwszy quiz i dołącz do tysięcy graczy.
-            Zdobywaj punkty, rywalizuj z innymi i wspinaj się na szczyt rankingu!
+            Don't wait! Choose your first quiz and join thousands of players.
+            Earn points, compete with others, and climb to the top of the rankings!
           </p>
 
           {/* CTA Buttons */}
@@ -62,7 +62,7 @@ export const QuickPlayCTA: React.FC<QuickPlayCTAProps> = ({ className }) => {
               leftIcon={<Play size={24} fill="white" />}
               className="bg-accent-400 hover:bg-accent-500 text-dark-900 font-bold text-lg px-10 py-5 shadow-2xl hover:scale-105 transition-all border-0 min-w-[250px]"
             >
-              Zacznij Grać Teraz!
+              Start Playing Now!
             </Button>
             <Button
               variant="outline"
@@ -70,7 +70,7 @@ export const QuickPlayCTA: React.FC<QuickPlayCTAProps> = ({ className }) => {
               leftIcon={<Zap size={24} />}
               className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-2 border-white font-bold text-lg px-10 py-5 hover:scale-105 transition-all min-w-[250px]"
             >
-              Losowy Quiz
+              Random Quiz
             </Button>
           </div>
 
@@ -78,15 +78,15 @@ export const QuickPlayCTA: React.FC<QuickPlayCTAProps> = ({ className }) => {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white/80">
             <div className="flex items-center gap-2">
               <span className="text-2xl">✓</span>
-              <span className="text-sm font-medium">Bez rejestracji</span>
+              <span className="text-sm font-medium">No registration</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl">✓</span>
-              <span className="text-sm font-medium">Całkowicie za darmo</span>
+              <span className="text-sm font-medium">Completely free</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl">✓</span>
-              <span className="text-sm font-medium">Natychmiastowy start</span>
+              <span className="text-sm font-medium">Instant start</span>
             </div>
           </div>
         </div>

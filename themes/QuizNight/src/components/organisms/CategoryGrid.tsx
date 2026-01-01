@@ -7,14 +7,14 @@ export interface CategoryGridProps {
 }
 
 const categories = [
-  { title: 'Filmy and Rethvn', icon: '🎬', difficulty: 'easy' as const, timeMinutes: 18 },
-  { title: 'Geografia', icon: '🌍', difficulty: 'medium' as const, timeMinutes: 18 },
-  { title: 'Historicnd Science', icon: '📚', difficulty: 'hard' as const, timeMinutes: 15 },
-  { title: 'Sport', icon: '⚽', difficulty: 'medium' as const, timeMinutes: 18 },
-  { title: 'Geografrioshart', icon: '🎨', difficulty: 'easy' as const, timeMinutes: 15 },
-  { title: 'Wute Practions', icon: '🧪', difficulty: 'medium' as const, timeMinutes: 15 },
-  { title: 'Wirld Zacsetaru', icon: '🏆', difficulty: 'hard' as const, timeMinutes: 15 },
-  { title: 'Super Iho doat to', icon: '⛰️', difficulty: 'medium' as const, timeMinutes: 18 },
+  { title: 'Movies & TV', icon: '🎬', difficulty: 'easy' as const, timeMinutes: 18 },
+  { title: 'Geography', icon: '🌍', difficulty: 'medium' as const, timeMinutes: 18 },
+  { title: 'History & Science', icon: '📚', difficulty: 'hard' as const, timeMinutes: 15 },
+  { title: 'Sports', icon: '⚽', difficulty: 'medium' as const, timeMinutes: 18 },
+  { title: 'Arts & Culture', icon: '🎨', difficulty: 'easy' as const, timeMinutes: 15 },
+  { title: 'Math & Logic', icon: '🧪', difficulty: 'medium' as const, timeMinutes: 15 },
+  { title: 'World Records', icon: '🏆', difficulty: 'hard' as const, timeMinutes: 15 },
+  { title: 'Nature & Animals', icon: '⛰️', difficulty: 'medium' as const, timeMinutes: 18 },
 ];
 
 /**
@@ -32,10 +32,10 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ className }) => {
         {/* Section header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-dark-900 mb-4">
-            Odkryj Swoją Kategorię Wiedzy
+            Discover Your Knowledge Category
           </h2>
           <p className="text-lg sm:text-xl text-dark-600 max-w-2xl mx-auto">
-            Wybierz temat, który Cię interesuje i sprawdź swoją wiedzę!
+            Choose a topic that interests you and test your knowledge!
           </p>
         </div>
 

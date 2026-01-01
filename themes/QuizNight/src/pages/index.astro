@@ -6,8 +6,134 @@ import { RankingCTA } from '@components/organisms/RankingCTA';
 import { PlatformStats } from '@components/organisms/PlatformStats';
 import { CategoryGrid } from '@components/organisms/CategoryGrid';
 import { QuickPlayCTA } from '@components/organisms/QuickPlayCTA';
+import { BlogSection } from '@components/organisms/BlogSection';
+import { QuizListSection, type Quiz } from '@components/organisms/QuizListSection';
 import { NewsletterSection } from '@components/organisms/NewsletterSection';
 import { Footer } from '@components/organisms/Footer';
+
+// Latest Trivia Quizzes
+const triviaQuizzes: Quiz[] = [
+  {
+    id: '1',
+    title: 'World Capitals Challenge',
+    description: 'Test your knowledge of capital cities from around the globe!',
+    icon: '🌍',
+    players: 1250,
+    duration: 10,
+    difficulty: 'medium',
+  },
+  {
+    id: '2',
+    title: 'Movie Quotes Trivia',
+    description: 'Can you identify these famous movie quotes?',
+    icon: '🎬',
+    players: 890,
+    duration: 8,
+    difficulty: 'easy',
+  },
+  {
+    id: '3',
+    title: 'Science Facts Quiz',
+    description: 'Explore fascinating facts about physics, chemistry, and biology.',
+    icon: '🔬',
+    players: 670,
+    duration: 12,
+    difficulty: 'hard',
+  },
+];
+
+// Latest Riddles
+const riddles: Quiz[] = [
+  {
+    id: '4',
+    title: 'Classic Brain Teasers',
+    description: 'Traditional riddles that will make you think outside the box.',
+    icon: '🧩',
+    players: 2100,
+    duration: 15,
+    difficulty: 'medium',
+  },
+  {
+    id: '5',
+    title: 'Math Logic Puzzles',
+    description: 'Solve these mathematical riddles using logic and reasoning.',
+    icon: '➗',
+    players: 540,
+    duration: 20,
+    difficulty: 'hard',
+  },
+  {
+    id: '6',
+    title: 'Quick Riddles for Kids',
+    description: 'Fun and easy riddles perfect for younger minds.',
+    icon: '🎈',
+    players: 1830,
+    duration: 5,
+    difficulty: 'easy',
+  },
+];
+
+// Latest Crosswords
+const crosswords: Quiz[] = [
+  {
+    id: '7',
+    title: 'Daily Mini Crossword',
+    description: 'Quick 5x5 crossword puzzle to start your day.',
+    icon: '📝',
+    players: 3200,
+    duration: 7,
+    difficulty: 'easy',
+  },
+  {
+    id: '8',
+    title: 'Movie & TV Crossword',
+    description: 'All clues are about your favorite shows and films.',
+    icon: '📺',
+    players: 1450,
+    duration: 15,
+    difficulty: 'medium',
+  },
+  {
+    id: '9',
+    title: 'Expert Challenge Grid',
+    description: 'Our toughest crossword for seasoned solvers.',
+    icon: '🏆',
+    players: 320,
+    duration: 30,
+    difficulty: 'hard',
+  },
+];
+
+// Latest Personality Quizzes
+const personalityQuizzes: Quiz[] = [
+  {
+    id: '10',
+    title: 'What\'s Your Learning Style?',
+    description: 'Discover how you best absorb and retain information.',
+    icon: '📚',
+    players: 4200,
+    duration: 10,
+    difficulty: 'easy',
+  },
+  {
+    id: '11',
+    title: 'Career Path Personality Test',
+    description: 'Find out which career fields match your personality traits.',
+    icon: '💼',
+    players: 2890,
+    duration: 12,
+    difficulty: 'medium',
+  },
+  {
+    id: '12',
+    title: 'Which Superhero Are You?',
+    description: 'Answer questions to reveal your inner superhero identity.',
+    icon: '🦸',
+    players: 5670,
+    duration: 8,
+    difficulty: 'easy',
+  },
+];
 ---
 
 <BaseLayout>
@@ -29,6 +155,45 @@ import { Footer } from '@components/organisms/Footer';
 
     <!-- Quick Play CTA -->
     <QuickPlayCTA client:visible />
+
+    <!-- Blog Section -->
+    <BlogSection client:visible />
+
+    <!-- Latest Trivia Quizzes -->
+    <QuizListSection
+      client:visible
+      title="Latest Trivia Quizzes"
+      description="Test your general knowledge across various topics"
+      quizzes={triviaQuizzes}
+      viewAllLink="/trivia"
+    />
+
+    <!-- Latest Riddles -->
+    <QuizListSection
+      client:visible
+      title="Brain-Teasing Riddles"
+      description="Challenge your mind with clever puzzles and riddles"
+      quizzes={riddles}
+      viewAllLink="/riddles"
+    />
+
+    <!-- Latest Crosswords -->
+    <QuizListSection
+      client:visible
+      title="Crossword Puzzles"
+      description="Sharpen your vocabulary and problem-solving skills"
+      quizzes={crosswords}
+      viewAllLink="/crosswords"
+    />
+
+    <!-- Latest Personality Quizzes -->
+    <QuizListSection
+      client:visible
+      title="Personality Quizzes"
+      description="Discover insights about yourself through fun assessments"
+      quizzes={personalityQuizzes}
+      viewAllLink="/personality"
+    />
 
     <!-- Newsletter -->
     <NewsletterSection client:visible />

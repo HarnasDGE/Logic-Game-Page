@@ -58,10 +58,10 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({ className 
           {/* Right side - Content */}
           <div className="text-center lg:text-left">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-dark-900 mb-4">
-              Community CTA
+              Join Our Community
             </h2>
             <p className="text-lg sm:text-xl text-dark-600 mb-8">
-              Siqnez mnie to ronus un to our newsletter!
+              Sign up for our newsletter and get weekly quiz updates!
             </p>
 
             {/* Email form */}
@@ -70,7 +70,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({ className 
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Spiszz your email"
+                placeholder="Enter your email"
                 className="flex-1 px-5 py-3 rounded-xl border-2 border-dark-300 focus:border-primary-500 focus:outline-none text-dark-900 placeholder:text-dark-400"
                 required
               />
@@ -81,7 +81,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({ className 
                 leftIcon={<Mail size={20} />}
                 className="bg-primary-600 hover:bg-primary-700 text-white font-bold whitespace-nowrap"
               >
-                Zapisz mnie!
+                Subscribe
               </Button>
             </form>
 

@@ -42,12 +42,12 @@ export const RankingCTA: React.FC<RankingCTAProps> = ({ className }) => {
 
           {/* Heading */}
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-dark-900 mb-4">
-            Nie graj sam!
+            Don't Play Alone!
           </h2>
 
           {/* Description */}
           <p className="text-lg sm:text-xl text-dark-600 mb-8 max-w-2xl mx-auto">
-            Zbieraj punkty, zdobywaj odznaki i wspinaj się w Ligowym Rankingu.
+            Collect points, earn badges, and climb the League Ranking.
           </p>
 
           {/* CTA Button */}
@@ -56,7 +56,7 @@ export const RankingCTA: React.FC<RankingCTAProps> = ({ className }) => {
             size="lg"
             className="bg-primary-600 hover:bg-primary-700 text-white font-bold text-lg px-8 py-4 shadow-xl hover:scale-105 transition-all"
           >
-            Zobacz Ranking Ligi
+            View League Ranking
           </Button>
         </div>
       </div>

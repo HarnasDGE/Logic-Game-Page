@@ -38,13 +38,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
           {/* Left side - Text content */}
           <div className="text-white space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              Rozruszaj Swoje<br />
-              Szare Komórki!
+              Exercise Your<br />
+              Grey Matter!
             </h1>
 
             <p className="text-lg sm:text-xl text-white/90 font-medium leading-relaxed">
-              Witaj w LogicLeague - najlepszej platformie do rozwijania umysłu poprzez zabawę!
-              Dołącz do społeczności miłośników wiedzy i sprawdź się w tysiącach quizów z każdej dziedziny.
+              Welcome to LogicLeague - the best platform for developing your mind through fun!
+              Join our community of knowledge enthusiasts and test yourself with thousands of quizzes from every field.
             </p>
 
             {/* Features list */}
@@ -53,19 +53,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
                 <div className="w-8 h-8 rounded-full bg-accent-400 flex items-center justify-center flex-shrink-0">
                   <Award size={16} className="text-dark-900" />
                 </div>
-                <span className="text-white/95 font-medium">Ponad 10,000 unikalnych quizów</span>
+                <span className="text-white/95 font-medium">Over 1,000+ unique quizzes</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent-400 flex items-center justify-center flex-shrink-0">
                   <TrendingUp size={16} className="text-dark-900" />
                 </div>
-                <span className="text-white/95 font-medium">Rywalizacja na żywo z innymi graczami</span>
+                <span className="text-white/95 font-medium">Compete live with other players</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent-400 flex items-center justify-center flex-shrink-0">
                   <Star size={16} className="text-dark-900" fill="currentColor" />
                 </div>
-                <span className="text-white/95 font-medium">Zdobywaj odznaki i nagrody</span>
+                <span className="text-white/95 font-medium">Earn badges and rewards</span>
               </div>
             </div>
 
@@ -76,7 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
                 leftIcon={<Play size={20} fill="currentColor" />}
                 className="bg-accent-400 hover:bg-accent-500 text-dark-900 font-bold text-lg px-8 py-4 shadow-2xl hover:scale-105 transition-all border-0"
               >
-                Zacznij Szybki Quiz Teraz!
+                Start a Quick Quiz Now!
               </Button>
             </div>
 
@@ -91,21 +91,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
                     <Star size={18} fill="#facc15" className="text-accent-400" />
                     <Star size={18} fill="#facc15" className="text-accent-400" />
                   </div>
-                  <p className="text-sm text-white/80">4.9/5 średnia ocena</p>
+                  <p className="text-sm text-white/80">4.8/5 rating</p>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <Users size={18} className="text-accent-400" />
-                    <span className="text-2xl font-bold">500K+</span>
+                    <span className="text-2xl font-bold">10K+</span>
                   </div>
-                  <p className="text-sm text-white/80">Aktywnych graczy</p>
+                  <p className="text-sm text-white/80">Active players</p>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <Award size={18} className="text-accent-400" />
-                    <span className="text-2xl font-bold">1M+</span>
+                    <span className="text-2xl font-bold">50K+</span>
                   </div>
-                  <p className="text-sm text-white/80">Rozegranych gier</p>
+                  <p className="text-sm text-white/80">Games played</p>
                 </div>
               </div>
             </div>
@@ -114,15 +114,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <span className="text-accent-400 text-xl">✓</span>
-                <span className="text-sm font-medium text-white/90">100% Darmowe</span>
+                <span className="text-sm font-medium text-white/90">100% Free</span>
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <span className="text-accent-400 text-xl">✓</span>
-                <span className="text-sm font-medium text-white/90">Bez Reklam</span>
+                <span className="text-sm font-medium text-white/90">No Registration</span>
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <span className="text-accent-400 text-xl">✓</span>
-                <span className="text-sm font-medium text-white/90">Graj Offline</span>
+                <span className="text-sm font-medium text-white/90">Play Anywhere</span>
               </div>
             </div>
           </div>
