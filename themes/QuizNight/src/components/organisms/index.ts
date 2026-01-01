@@ -16,3 +16,4 @@ export { PlatformStats, type PlatformStatsProps } from './PlatformStats';
 export { QuickPlayCTA, type QuickPlayCTAProps } from './QuickPlayCTA';
 export { QuizListSection, type QuizListSectionProps, type Quiz } from './QuizListSection';
 export { BlogSection, type BlogSectionProps } from './BlogSection';
+export { default as QuizPlayer } from './QuizPlayer';

@@ -1,0 +1,197 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { AdSlot } from '@components/molecules/AdSlot';
+import QuizPlayer from '@components/organisms/QuizPlayer';
+
+// Export getStaticPaths for static generation
+export function getStaticPaths() {
+  return [
+    { params: { slug: '1' } },
+    { params: { slug: '2' } },
+    { params: { slug: '3' } },
+    { params: { slug: '4' } },
+    { params: { slug: '5' } },
+    { params: { slug: '6' } },
+    { params: { slug: '7' } },
+    { params: { slug: '8' } },
+    { params: { slug: '9' } },
+    { params: { slug: '10' } },
+    { params: { slug: '11' } },
+    { params: { slug: '12' } },
+  ];
+}
+
+// Get slug from URL params
+const { slug } = Astro.params;
+
+// All quiz data with questions
+const quizData: Record<string, any> = {
+  '1': {
+    id: '1',
+    title: 'World Capitals Challenge',
+    category: 'Geography',
+    difficulty: 'medium',
+    timeLimit: 10,
+    questions: [
+      {
+        id: 1,
+        question: 'What is the capital of France?',
+        options: ['London', 'Berlin', 'Paris', 'Madrid'],
+        correctAnswer: 2,
+      },
+      {
+        id: 2,
+        question: 'What is the capital of Japan?',
+        options: ['Seoul', 'Tokyo', 'Beijing', 'Bangkok'],
+        correctAnswer: 1,
+      },
+      {
+        id: 3,
+        question: 'What is the capital of Australia?',
+        options: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'],
+        correctAnswer: 2,
+      },
+      {
+        id: 4,
+        question: 'What is the capital of Canada?',
+        options: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa'],
+        correctAnswer: 3,
+      },
+      {
+        id: 5,
+        question: 'What is the capital of Brazil?',
+        options: ['Rio de Janeiro', 'São Paulo', 'Brasília', 'Salvador'],
+        correctAnswer: 2,
+      },
+    ],
+  },
+  '2': {
+    id: '2',
+    title: 'Movie Quotes Trivia',
+    category: 'Entertainment',
+    difficulty: 'easy',
+    timeLimit: 8,
+    questions: [
+      {
+        id: 1,
+        question: '"May the Force be with you" is from which movie?',
+        options: ['Star Trek', 'Star Wars', 'Interstellar', 'The Matrix'],
+        correctAnswer: 1,
+      },
+      {
+        id: 2,
+        question: '"I\'ll be back" was said by Arnold Schwarzenegger in which film?',
+        options: ['Predator', 'Total Recall', 'The Terminator', 'Commando'],
+        correctAnswer: 2,
+      },
+      {
+        id: 3,
+        question: '"Here\'s looking at you, kid" is a famous line from:',
+        options: ['Casablanca', 'Gone with the Wind', 'The Maltese Falcon', 'Key Largo'],
+        correctAnswer: 0,
+      },
+    ],
+  },
+  '3': {
+    id: '3',
+    title: 'Science Facts Quiz',
+    category: 'Science',
+    difficulty: 'hard',
+    timeLimit: 12,
+    questions: [
+      {
+        id: 1,
+        question: 'What is the chemical symbol for gold?',
+        options: ['Go', 'Gd', 'Au', 'Ag'],
+        correctAnswer: 2,
+      },
+      {
+        id: 2,
+        question: 'What is the speed of light in a vacuum?',
+        options: ['299,792,458 m/s', '300,000,000 m/s', '250,000,000 m/s', '350,000,000 m/s'],
+        correctAnswer: 0,
+      },
+      {
+        id: 3,
+        question: 'What is the powerhouse of the cell?',
+        options: ['Nucleus', 'Ribosome', 'Mitochondria', 'Endoplasmic Reticulum'],
+        correctAnswer: 2,
+      },
+    ],
+  },
+};
+
+// Default quiz data for other quizzes
+const defaultQuestions = [
+  {
+    id: 1,
+    question: 'Sample question 1?',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    correctAnswer: 0,
+  },
+  {
+    id: 2,
+    question: 'Sample question 2?',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    correctAnswer: 1,
+  },
+  {
+    id: 3,
+    question: 'Sample question 3?',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    correctAnswer: 2,
+  },
+];
+
+const quiz = quizData[slug!] || {
+  id: slug,
+  title: 'Quiz',
+  category: 'General',
+  difficulty: 'medium',
+  timeLimit: 10,
+  questions: defaultQuestions,
+};
+---
+
+<BaseLayout>
+  <Header client:load />
+
+  <main class="pt-20 min-h-screen bg-gradient-to-b from-white to-dark-50">
+    <!-- Top Banner Ad -->
+    <div class="bg-white border-b border-dark-100 py-4">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="quiz-play-top-banner" />
+      </div>
+    </div>
+
+    <div class="container-custom py-12">
+      <!-- Quiz Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-dark-900 mb-2">
+          {quiz.title}
+        </h1>
+        <div class="flex items-center justify-center gap-4 text-dark-600">
+          <span class="px-3 py-1 rounded-full bg-primary-100 text-primary-700 text-sm font-semibold capitalize">
+            {quiz.category}
+          </span>
+          <span class="text-sm">•</span>
+          <span class="text-sm font-medium">{quiz.questions.length} Questions</span>
+          <span class="text-sm">•</span>
+          <span class="text-sm font-medium">{quiz.timeLimit} min</span>
+        </div>
+      </div>
+
+      <!-- Quiz Player Component -->
+      <QuizPlayer client:load quiz={quiz} />
+
+      <!-- Bottom Ad -->
+      <div class="mt-12 flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="quiz-play-bottom-banner" />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

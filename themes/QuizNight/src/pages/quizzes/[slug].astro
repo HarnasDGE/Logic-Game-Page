@@ -286,10 +286,10 @@ const relatedQuizzes = Object.values(allQuizzes)
 
             <!-- Action Buttons -->
             <div class="flex flex-wrap gap-4 mt-8">
-              <button class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all text-lg flex-1 sm:flex-none">
+              <a href={`/quizzes/${quiz.id}/play`} class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all text-lg flex-1 sm:flex-none">
                 <span>▶</span>
                 Start Quiz Now
-              </button>
+              </a>
               <button class="flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-dark-200 hover:border-primary-300 text-dark-700 hover:text-primary-600 font-semibold rounded-lg transition-all text-lg">
                 <span>🔖</span>
                 Save for Later
@@ -371,7 +371,7 @@ const relatedQuizzes = Object.values(allQuizzes)
         <!-- Sidebar -->
         <aside class="space-y-8">
           <!-- Sidebar Ad (Rectangle) -->
-          <div class="sticky top-24">
+          <div>
             <AdSlot client:visible format="rectangle" slotId="quiz-page-sidebar-top" />
           </div>
 
@@ -429,10 +429,3 @@ const relatedQuizzes = Object.values(allQuizzes)
 
   <Footer />
 </BaseLayout>
-
-<style>
-  /* Smooth scroll for sticky sidebar */
-  .sticky {
-    position: sticky;
-  }
-</style>
