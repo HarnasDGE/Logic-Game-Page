@@ -1,0 +1,267 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { QuizCard } from '@components/molecules/QuizCard';
+import { AdSlot } from '@components/molecules/AdSlot';
+import { SearchBar } from '@components/molecules/SearchBar';
+import type { Quiz } from '@types/index';
+
+// Mock quiz data - this would come from WordPress/API
+const allQuizzes: Quiz[] = [
+  {
+    id: '1',
+    title: 'World Capitals Challenge',
+    description: 'Test your knowledge of capital cities from around the globe! From Europe to Asia, can you name them all?',
+    category: 'trivia',
+    difficulty: 'medium',
+    questionsCount: 20,
+    timeLimit: 10,
+    thumbnail: '🌍',
+    plays: 1250,
+    rating: 4.5,
+  },
+  {
+    id: '2',
+    title: 'Movie Quotes Trivia',
+    description: 'Can you identify these famous movie quotes? Test your cinema knowledge!',
+    category: 'trivia',
+    difficulty: 'easy',
+    questionsCount: 15,
+    timeLimit: 8,
+    thumbnail: '🎬',
+    plays: 890,
+    rating: 4.7,
+  },
+  {
+    id: '3',
+    title: 'Science Facts Quiz',
+    description: 'Explore fascinating facts about physics, chemistry, and biology.',
+    category: 'trivia',
+    difficulty: 'hard',
+    questionsCount: 25,
+    timeLimit: 12,
+    thumbnail: '🔬',
+    plays: 670,
+    rating: 4.8,
+  },
+  {
+    id: '4',
+    title: 'Classic Brain Teasers',
+    description: 'Traditional riddles that will make you think outside the box.',
+    category: 'riddles',
+    difficulty: 'medium',
+    questionsCount: 12,
+    timeLimit: 15,
+    thumbnail: '🧩',
+    plays: 2100,
+    rating: 4.6,
+  },
+  {
+    id: '5',
+    title: 'Math Logic Puzzles',
+    description: 'Solve these mathematical riddles using logic and reasoning.',
+    category: 'logic',
+    difficulty: 'hard',
+    questionsCount: 18,
+    timeLimit: 20,
+    thumbnail: '➗',
+    plays: 540,
+    rating: 4.9,
+  },
+  {
+    id: '6',
+    title: 'Quick Riddles for Kids',
+    description: 'Fun and easy riddles perfect for younger minds.',
+    category: 'riddles',
+    difficulty: 'easy',
+    questionsCount: 10,
+    timeLimit: 5,
+    thumbnail: '🎈',
+    plays: 1830,
+    rating: 4.4,
+  },
+  {
+    id: '7',
+    title: 'Daily Mini Crossword',
+    description: 'Quick 5x5 crossword puzzle to start your day.',
+    category: 'crossword',
+    difficulty: 'easy',
+    questionsCount: 8,
+    timeLimit: 7,
+    thumbnail: '📝',
+    plays: 3200,
+    rating: 4.7,
+  },
+  {
+    id: '8',
+    title: 'Movie & TV Crossword',
+    description: 'All clues are about your favorite shows and films.',
+    category: 'crossword',
+    difficulty: 'medium',
+    questionsCount: 15,
+    timeLimit: 15,
+    thumbnail: '📺',
+    plays: 1450,
+    rating: 4.5,
+  },
+  {
+    id: '9',
+    title: 'History Masters Quiz',
+    description: 'Journey through time with questions spanning ancient to modern history.',
+    category: 'trivia',
+    difficulty: 'hard',
+    questionsCount: 30,
+    timeLimit: 18,
+    thumbnail: '📚',
+    plays: 820,
+    rating: 4.8,
+  },
+  {
+    id: '10',
+    title: 'Sports Legends Trivia',
+    description: 'Test your sports knowledge across football, basketball, and more!',
+    category: 'trivia',
+    difficulty: 'medium',
+    questionsCount: 20,
+    timeLimit: 12,
+    thumbnail: '⚽',
+    plays: 1650,
+    rating: 4.6,
+  },
+  {
+    id: '11',
+    title: 'Music Through the Decades',
+    description: 'From the 60s to today, how well do you know music history?',
+    category: 'trivia',
+    difficulty: 'medium',
+    questionsCount: 22,
+    timeLimit: 15,
+    thumbnail: '🎵',
+    plays: 1120,
+    rating: 4.7,
+  },
+  {
+    id: '12',
+    title: 'Geography Expert Challenge',
+    description: 'Advanced geography questions for true map lovers.',
+    category: 'trivia',
+    difficulty: 'hard',
+    questionsCount: 28,
+    timeLimit: 20,
+    thumbnail: '🗺️',
+    plays: 560,
+    rating: 4.9,
+  },
+];
+---
+
+<BaseLayout>
+  <Header client:load />
+
+  <main class="pt-20 min-h-screen bg-gradient-to-b from-white to-dark-50">
+    <!-- Page Header -->
+    <section class="py-12 sm:py-16 bg-gradient-to-br from-primary-600 to-secondary-500 text-white">
+      <div class="container-custom">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-4">
+          All Quizzes
+        </h1>
+        <p class="text-lg sm:text-xl text-white/90 max-w-2xl">
+          Explore our complete collection of brain-teasing quizzes, puzzles, and challenges. Find your next favorite game!
+        </p>
+      </div>
+    </section>
+
+    <div class="container-custom py-12">
+      <!-- Search and Filters -->
+      <div class="mb-8">
+        <SearchBar client:load placeholder="Search quizzes..." />
+
+        <!-- Filter buttons -->
+        <div class="flex flex-wrap gap-3 mt-6">
+          <button class="px-4 py-2 rounded-lg bg-primary-600 text-white font-semibold text-sm hover:bg-primary-700 transition-colors">
+            All
+          </button>
+          <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+            Trivia
+          </button>
+          <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+            Riddles
+          </button>
+          <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+            Logic
+          </button>
+          <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+            Crosswords
+          </button>
+        </div>
+      </div>
+
+      <!-- Top Banner Ad -->
+      <div class="mb-12 flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="quiz-grid-top-banner" />
+      </div>
+
+      <!-- Quiz Grid with Integrated Ads -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allQuizzes.map((quiz, index) => (
+          <>
+            <QuizCard
+              client:visible
+              id={quiz.id}
+              title={quiz.title}
+              description={quiz.description}
+              category={quiz.category}
+              difficulty={quiz.difficulty}
+              questionsCount={quiz.questionsCount}
+              timeLimit={quiz.timeLimit}
+              thumbnail={quiz.thumbnail}
+              plays={quiz.plays}
+              rating={quiz.rating}
+            />
+
+            <!-- Insert rectangle ad after every 6 quizzes -->
+            {(index + 1) % 6 === 0 && (
+              <div class="md:col-span-2 lg:col-span-3 flex justify-center py-6">
+                <AdSlot client:visible format="banner" slotId={`quiz-grid-mid-${index}`} />
+              </div>
+            )}
+          </>
+        ))}
+      </div>
+
+      <!-- Bottom Banner Ad -->
+      <div class="mt-12 flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="quiz-grid-bottom-banner" />
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center items-center gap-2 mt-12">
+        <button class="px-4 py-2 rounded-lg bg-dark-100 text-dark-400 font-semibold text-sm cursor-not-allowed">
+          Previous
+        </button>
+        <button class="px-4 py-2 rounded-lg bg-primary-600 text-white font-semibold text-sm">
+          1
+        </button>
+        <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+          2
+        </button>
+        <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+          3
+        </button>
+        <button class="px-4 py-2 rounded-lg bg-white border-2 border-dark-200 text-dark-700 font-semibold text-sm hover:border-primary-300 hover:text-primary-600 transition-colors">
+          Next
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Smooth transitions */
+  button {
+    transition: all 0.2s ease;
+  }
+</style>

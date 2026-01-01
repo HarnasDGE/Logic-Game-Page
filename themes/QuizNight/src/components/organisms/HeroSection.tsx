@@ -118,11 +118,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <span className="text-accent-400 text-xl">✓</span>
-                <span className="text-sm font-medium text-white/90">No Registration</span>
+                <span className="text-sm font-medium text-white/90">Play Anywhere</span>
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <span className="text-accent-400 text-xl">✓</span>
-                <span className="text-sm font-medium text-white/90">Play Anywhere</span>
+                <span className="text-sm font-medium text-white/90">Daily Rewards</span>
               </div>
             </div>
           </div>

@@ -1,0 +1,280 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { Button } from '@components/atoms/Button';
+import { AdSlot } from '@components/molecules/AdSlot';
+import { QuizStats } from '@components/molecules/QuizStats';
+import { Play, Clock, Target, Users, Star, Share2, Bookmark } from 'lucide-react';
+
+// Get slug from URL params
+const { slug } = Astro.params;
+
+// Mock quiz data - this would come from WordPress/API
+const quiz = {
+  id: slug,
+  title: 'World Capitals Challenge',
+  description: 'Test your knowledge of capital cities from around the globe! From Europe to Asia, Africa to the Americas, can you name them all? This comprehensive quiz will challenge even the most seasoned geography enthusiasts.',
+  category: 'Geography',
+  difficulty: 'medium',
+  questionsCount: 20,
+  timeLimit: 10,
+  thumbnail: '🌍',
+  plays: 1250,
+  rating: 4.5,
+  author: 'Quiz Master',
+  createdAt: '2024-01-15',
+  tags: ['Geography', 'Capitals', 'World', 'Cities'],
+};
+
+const difficultyColors = {
+  easy: 'bg-accent-100 text-accent-700',
+  medium: 'bg-secondary-100 text-secondary-700',
+  hard: 'bg-primary-100 text-primary-700',
+};
+
+const stats = [
+  { label: 'Questions', value: quiz.questionsCount.toString(), icon: 'target' },
+  { label: 'Time Limit', value: `${quiz.timeLimit} min`, icon: 'clock' },
+  { label: 'Players', value: quiz.plays.toLocaleString(), icon: 'users' },
+  { label: 'Rating', value: `${quiz.rating}/5`, icon: 'star' },
+];
+---
+
+<BaseLayout>
+  <Header client:load />
+
+  <main class="pt-20 min-h-screen bg-gradient-to-b from-white to-dark-50">
+    <!-- Top Banner Ad -->
+    <div class="bg-white border-b border-dark-100 py-4">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="quiz-page-top-banner" />
+      </div>
+    </div>
+
+    <div class="container-custom py-12">
+      <div class="grid lg:grid-cols-[1fr_300px] gap-8">
+        <!-- Main Content -->
+        <div>
+          <!-- Quiz Header -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+            <!-- Breadcrumb -->
+            <nav class="text-sm text-dark-600 mb-4">
+              <a href="/" class="hover:text-primary-600 transition-colors">Home</a>
+              <span class="mx-2">/</span>
+              <a href="/quizzes" class="hover:text-primary-600 transition-colors">Quizzes</a>
+              <span class="mx-2">/</span>
+              <span class="text-dark-900 font-medium">{quiz.title}</span>
+            </nav>
+
+            <!-- Category & Difficulty -->
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <span class="px-3 py-1 rounded-full bg-primary-100 text-primary-700 text-sm font-semibold">
+                {quiz.category}
+              </span>
+              <span class={`px-3 py-1 rounded-full text-sm font-semibold capitalize ${difficultyColors[quiz.difficulty]}`}>
+                {quiz.difficulty}
+              </span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-dark-900 mb-4">
+              {quiz.title}
+            </h1>
+
+            <!-- Emoji Icon -->
+            <div class="text-7xl mb-6">{quiz.thumbnail}</div>
+
+            <!-- Description -->
+            <p class="text-lg text-dark-700 leading-relaxed mb-6">
+              {quiz.description}
+            </p>
+
+            <!-- Stats -->
+            <QuizStats client:visible stats={stats} />
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4 mt-8">
+              <Button
+                client:visible
+                variant="primary"
+                size="lg"
+                leftIcon={<Play size={20} fill="currentColor" />}
+                className="flex-1 sm:flex-none"
+              >
+                Start Quiz Now
+              </Button>
+              <Button
+                client:visible
+                variant="outline"
+                size="lg"
+                leftIcon={<Bookmark size={20} />}
+              >
+                Save for Later
+              </Button>
+              <Button
+                client:visible
+                variant="outline"
+                size="lg"
+                leftIcon={<Share2 size={20} />}
+              >
+                Share
+              </Button>
+            </div>
+          </div>
+
+          <!-- Mid-Content Ad (Rectangle) -->
+          <div class="mb-8 flex justify-center">
+            <AdSlot client:visible format="banner" slotId="quiz-page-mid-banner" />
+          </div>
+
+          <!-- Quiz Details -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+            <h2 class="text-2xl font-display font-bold text-dark-900 mb-4">
+              What to Expect
+            </h2>
+            <div class="space-y-4">
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+                  <Target className="text-primary-600" size={20} />
+                </div>
+                <div>
+                  <h3 class="font-bold text-dark-900 mb-1">Challenging Questions</h3>
+                  <p class="text-dark-600">
+                    {quiz.questionsCount} carefully crafted questions to test your knowledge.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-secondary-100 flex items-center justify-center flex-shrink-0">
+                  <Clock className="text-secondary-600" size={20} />
+                </div>
+                <div>
+                  <h3 class="font-bold text-dark-900 mb-1">Timed Challenge</h3>
+                  <p class="text-dark-600">
+                    Complete the quiz within {quiz.timeLimit} minutes for maximum points.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center flex-shrink-0">
+                  <Star className="text-accent-600" size={20} />
+                </div>
+                <div>
+                  <h3 class="font-bold text-dark-900 mb-1">Earn Rewards</h3>
+                  <p class="text-dark-600">
+                    Score high to earn badges and climb the leaderboard!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+            <h2 class="text-2xl font-display font-bold text-dark-900 mb-4">
+              Topics Covered
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              {quiz.tags.map((tag) => (
+                <a
+                  href={`/tags/${tag.toLowerCase()}`}
+                  class="px-4 py-2 rounded-lg bg-dark-50 hover:bg-primary-50 text-dark-700 hover:text-primary-600 font-medium text-sm transition-colors border-2 border-transparent hover:border-primary-200"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="space-y-8">
+          <!-- Sidebar Ad (Rectangle) -->
+          <div class="sticky top-24">
+            <AdSlot client:visible format="rectangle" slotId="quiz-page-sidebar-top" />
+          </div>
+
+          <!-- Author Info -->
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-lg font-display font-bold text-dark-900 mb-4">
+              Created By
+            </h3>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-xl font-bold">
+                {quiz.author.charAt(0)}
+              </div>
+              <div>
+                <p class="font-bold text-dark-900">{quiz.author}</p>
+                <p class="text-sm text-dark-600">{quiz.createdAt}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Another Sidebar Ad -->
+          <AdSlot client:visible format="rectangle" slotId="quiz-page-sidebar-bottom" />
+
+          <!-- Related Quizzes -->
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-lg font-display font-bold text-dark-900 mb-4">
+              You Might Also Like
+            </h3>
+            <div class="space-y-4">
+              <a href="/quizzes/country-flags" class="block group">
+                <div class="flex gap-3">
+                  <div class="text-3xl">🏳️</div>
+                  <div>
+                    <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
+                      Country Flags Quiz
+                    </h4>
+                    <p class="text-xs text-dark-600">15 questions • Medium</p>
+                  </div>
+                </div>
+              </a>
+
+              <a href="/quizzes/european-capitals" class="block group">
+                <div class="flex gap-3">
+                  <div class="text-3xl">🇪🇺</div>
+                  <div>
+                    <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
+                      European Capitals
+                    </h4>
+                    <p class="text-xs text-dark-600">20 questions • Easy</p>
+                  </div>
+                </div>
+              </a>
+
+              <a href="/quizzes/world-landmarks" class="block group">
+                <div class="flex gap-3">
+                  <div class="text-3xl">🗼</div>
+                  <div>
+                    <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
+                      World Landmarks
+                    </h4>
+                    <p class="text-xs text-dark-600">18 questions • Medium</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Bottom Banner Ad -->
+      <div class="mt-12 flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="quiz-page-bottom-banner" />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Smooth scroll for sticky sidebar */
+  .sticky {
+    position: sticky;
+  }
+</style>
