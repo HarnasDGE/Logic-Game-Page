@@ -2,10 +2,8 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { Header } from '@components/organisms/Header';
 import { Footer } from '@components/organisms/Footer';
-import { Button } from '@components/atoms/Button';
 import { AdSlot } from '@components/molecules/AdSlot';
 import { QuizStats } from '@components/molecules/QuizStats';
-import { Play, Clock, Target, Users, Star, Share2, Bookmark } from 'lucide-react';
 
 // Export getStaticPaths for static generation
 export function getStaticPaths() {
@@ -288,31 +286,18 @@ const relatedQuizzes = Object.values(allQuizzes)
 
             <!-- Action Buttons -->
             <div class="flex flex-wrap gap-4 mt-8">
-              <Button
-                client:visible
-                variant="primary"
-                size="lg"
-                leftIcon={<Play size={20} fill="currentColor" />}
-                className="flex-1 sm:flex-none"
-              >
+              <button class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all text-lg flex-1 sm:flex-none">
+                <span>▶</span>
                 Start Quiz Now
-              </Button>
-              <Button
-                client:visible
-                variant="outline"
-                size="lg"
-                leftIcon={<Bookmark size={20} />}
-              >
+              </button>
+              <button class="flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-dark-200 hover:border-primary-300 text-dark-700 hover:text-primary-600 font-semibold rounded-lg transition-all text-lg">
+                <span>🔖</span>
                 Save for Later
-              </Button>
-              <Button
-                client:visible
-                variant="outline"
-                size="lg"
-                leftIcon={<Share2 size={20} />}
-              >
+              </button>
+              <button class="flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-dark-200 hover:border-primary-300 text-dark-700 hover:text-primary-600 font-semibold rounded-lg transition-all text-lg">
+                <span>↗️</span>
                 Share
-              </Button>
+              </button>
             </div>
           </div>
 
@@ -328,8 +313,8 @@ const relatedQuizzes = Object.values(allQuizzes)
             </h2>
             <div class="space-y-4">
               <div class="flex gap-4">
-                <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
-                  <Target className="text-primary-600" size={20} />
+                <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 text-xl">
+                  🎯
                 </div>
                 <div>
                   <h3 class="font-bold text-dark-900 mb-1">Challenging Questions</h3>
@@ -340,8 +325,8 @@ const relatedQuizzes = Object.values(allQuizzes)
               </div>
 
               <div class="flex gap-4">
-                <div class="w-10 h-10 rounded-full bg-secondary-100 flex items-center justify-center flex-shrink-0">
-                  <Clock className="text-secondary-600" size={20} />
+                <div class="w-10 h-10 rounded-full bg-secondary-100 flex items-center justify-center flex-shrink-0 text-xl">
+                  ⏱️
                 </div>
                 <div>
                   <h3 class="font-bold text-dark-900 mb-1">Timed Challenge</h3>
@@ -352,8 +337,8 @@ const relatedQuizzes = Object.values(allQuizzes)
               </div>
 
               <div class="flex gap-4">
-                <div class="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center flex-shrink-0">
-                  <Star className="text-accent-600" size={20} />
+                <div class="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center flex-shrink-0 text-xl">
+                  ⭐
                 </div>
                 <div>
                   <h3 class="font-bold text-dark-900 mb-1">Earn Rewards</h3>
