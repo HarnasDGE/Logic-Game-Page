@@ -2,13 +2,9 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { Header } from '@components/organisms/Header';
 import { HeroSection } from '@components/organisms/HeroSection';
+import { RankingCTA } from '@components/organisms/RankingCTA';
 import { CategoryGrid } from '@components/organisms/CategoryGrid';
-import { QuizGrid } from '@components/organisms/QuizGrid';
 import { Footer } from '@components/organisms/Footer';
-import { mockQuizzes } from '@lib/constants/mockData';
-
-const featuredQuizzes = mockQuizzes.filter((quiz) => quiz.featured);
-const popularQuizzes = mockQuizzes.sort((a, b) => b.plays - a.plays).slice(0, 8);
 ---
 
 <BaseLayout>
@@ -17,80 +13,13 @@ const popularQuizzes = mockQuizzes.sort((a, b) => b.plays - a.plays).slice(0, 8)
 
   <main>
     <!-- Hero Section -->
-    <HeroSection
-      client:visible
-      onSearch={(query) => {
-        console.log('Search:', query);
-        // Will be handled by search functionality
-      }}
-    />
+    <HeroSection client:visible />
 
-    <!-- Featured Quizzes -->
-    <section class="bg-white">
-      <QuizGrid
-        client:visible
-        quizzes={featuredQuizzes}
-        title="⭐ Featured Quizzes"
-        description="Our most popular and highest-rated quizzes"
-        showFilters={false}
-        onPlayQuiz={(quizId) => {
-          console.log('Play quiz:', quizId);
-          // Will navigate to quiz page
-        }}
-      />
-    </section>
+    <!-- Ranking CTA -->
+    <RankingCTA client:visible />
 
     <!-- Categories -->
-    <section class="bg-gradient-to-b from-white to-primary-50/30">
-      <CategoryGrid
-        client:visible
-        onCategoryClick={(category) => {
-          console.log('Category clicked:', category);
-          // Will navigate to category page
-        }}
-      />
-    </section>
-
-    <!-- Popular Quizzes -->
-    <section class="bg-white">
-      <QuizGrid
-        client:visible
-        quizzes={popularQuizzes}
-        title="🔥 Most Popular"
-        description="Join thousands of players on these trending quizzes"
-        showFilters={true}
-        onPlayQuiz={(quizId) => {
-          console.log('Play quiz:', quizId);
-          // Will navigate to quiz page
-        }}
-      />
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-16 sm:py-24 bg-gradient-to-br from-primary-600 to-secondary-600">
-      <div class="container-custom text-center">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-6">
-          Ready to Challenge Yourself?
-        </h2>
-        <p class="text-lg sm:text-xl text-primary-50 mb-8 max-w-2xl mx-auto">
-          Join over 500,000 players and start your journey to becoming a quiz master today!
-        </p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="/signup"
-            class="btn-primary btn px-8 py-4 text-lg bg-white text-primary-600 hover:bg-primary-50 min-w-[200px]"
-          >
-            Sign Up Free
-          </a>
-          <a
-            href="/quizzes"
-            class="btn-outline btn px-8 py-4 text-lg border-white text-white hover:bg-white/10 min-w-[200px]"
-          >
-            Browse Quizzes
-          </a>
-        </div>
-      </div>
-    </section>
+    <CategoryGrid client:visible />
   </main>
 
   <!-- Footer -->

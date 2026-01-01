@@ -1,97 +1,53 @@
 import React from 'react';
 import { CategoryCard } from '@components/molecules';
-import { Brain, Calculator, Grid3x3, Crosshair, Lightbulb, Zap, BookOpen, Puzzle } from 'lucide-react';
 import { cn } from '@lib/utils/cn';
-import type { QuizCategory } from '@types/index';
 
 export interface CategoryGridProps {
   className?: string;
-  onCategoryClick?: (category: QuizCategory) => void;
 }
 
+const categories = [
+  { title: 'Filmy and Rethvn', icon: '🎬', difficulty: 'easy' as const, timeMinutes: 18 },
+  { title: 'Geografia', icon: '🌍', difficulty: 'medium' as const, timeMinutes: 18 },
+  { title: 'Historicnd Science', icon: '📚', difficulty: 'hard' as const, timeMinutes: 15 },
+  { title: 'Sport', icon: '⚽', difficulty: 'medium' as const, timeMinutes: 18 },
+  { title: 'Geografrioshart', icon: '🎨', difficulty: 'easy' as const, timeMinutes: 15 },
+  { title: 'Wute Practions', icon: '🧪', difficulty: 'medium' as const, timeMinutes: 15 },
+  { title: 'Wirld Zacsetaru', icon: '🏆', difficulty: 'hard' as const, timeMinutes: 15 },
+  { title: 'Super Iho doat to', icon: '⛰️', difficulty: 'medium' as const, timeMinutes: 18 },
+];
+
 /**
- * CategoryGrid Component - Atomic Design: Organism
+ * CategoryGrid Component - Grid of knowledge categories
  *
- * Grid of quiz categories with icons.
- * Mobile-first responsive grid layout.
+ * Displays category cards in responsive grid
  *
  * @example
- * <CategoryGrid onCategoryClick={handleCategoryClick} />
+ * <CategoryGrid />
  */
-export const CategoryGrid: React.FC<CategoryGridProps> = ({ className, onCategoryClick }) => {
-  const categories = [
-    {
-      category: 'trivia' as QuizCategory,
-      count: 2500,
-      icon: <Brain size={32} />,
-      color: 'from-purple-500 to-purple-600',
-    },
-    {
-      category: 'logic' as QuizCategory,
-      count: 1800,
-      icon: <Puzzle size={32} />,
-      color: 'from-blue-500 to-blue-600',
-    },
-    {
-      category: 'math' as QuizCategory,
-      count: 1200,
-      icon: <Calculator size={32} />,
-      color: 'from-green-500 to-green-600',
-    },
-    {
-      category: 'sudoku' as QuizCategory,
-      count: 950,
-      icon: <Grid3x3 size={32} />,
-      color: 'from-orange-500 to-orange-600',
-    },
-    {
-      category: 'crossword' as QuizCategory,
-      count: 780,
-      icon: <Crosshair size={32} />,
-      color: 'from-red-500 to-red-600',
-    },
-    {
-      category: 'riddles' as QuizCategory,
-      count: 1500,
-      icon: <Lightbulb size={32} />,
-      color: 'from-yellow-500 to-yellow-600',
-    },
-    {
-      category: 'memory' as QuizCategory,
-      count: 650,
-      icon: <Zap size={32} />,
-      color: 'from-pink-500 to-pink-600',
-    },
-    {
-      category: 'word-games' as QuizCategory,
-      count: 890,
-      icon: <BookOpen size={32} />,
-      color: 'from-indigo-500 to-indigo-600',
-    },
-  ];
-
+export const CategoryGrid: React.FC<CategoryGridProps> = ({ className }) => {
   return (
-    <section className={cn('py-12 sm:py-16', className)}>
+    <section className={cn('py-16 sm:py-24 bg-gray-50', className)}>
       <div className="container-custom">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-dark-900 mb-4">
-            Browse by Category
+        {/* Section header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-dark-900 mb-4">
+            Odkryj Swoją Kategorię Wiedzy
           </h2>
-          <p className="text-base sm:text-lg text-dark-600 max-w-2xl mx-auto">
-            Explore our vast collection of quizzes organized by category. Find your favorite
-            type of challenge!
+          <p className="text-lg sm:text-xl text-dark-600 max-w-2xl mx-auto">
+            Wybierz temat, który Cię interesuje i sprawdź swoją wiedzę!
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {categories.map((cat) => (
+        {/* Category grid */}
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {categories.map((category, index) => (
             <CategoryCard
-              key={cat.category}
-              category={cat.category}
-              count={cat.count}
-              icon={cat.icon}
-              color={cat.color}
-              onClick={() => onCategoryClick?.(cat.category)}
+              key={index}
+              title={category.title}
+              icon={category.icon}
+              difficulty={category.difficulty}
+              timeMinutes={category.timeMinutes}
             />
           ))}
         </div>
