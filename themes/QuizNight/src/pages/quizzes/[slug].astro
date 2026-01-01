@@ -227,6 +227,11 @@ const stats = [
   { label: 'Players', value: quiz.plays.toLocaleString(), icon: 'users' },
   { label: 'Rating', value: `${quiz.rating}/5`, icon: 'star' },
 ];
+
+// Get related quizzes
+const relatedQuizzes = Object.values(allQuizzes)
+  .filter(q => q.id !== quiz.id && (q.category === quiz.category || q.difficulty === quiz.difficulty))
+  .slice(0, 3);
 ---
 
 <BaseLayout>
@@ -410,25 +415,21 @@ const stats = [
               You Might Also Like
             </h3>
             <div class="space-y-4">
-              {Object.values(allQuizzes)
-                .filter(q => q.id !== quiz.id && (q.category === quiz.category || q.difficulty === quiz.difficulty))
-                .slice(0, 3)
-                .map(relatedQuiz => (
-                  <a href={`/quizzes/${relatedQuiz.id}`} class="block group">
-                    <div class="flex gap-3">
-                      <div class="text-3xl">{relatedQuiz.thumbnail}</div>
-                      <div>
-                        <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
-                          {relatedQuiz.title}
-                        </h4>
-                        <p class="text-xs text-dark-600">
-                          {relatedQuiz.questionsCount} questions • {relatedQuiz.difficulty.charAt(0).toUpperCase() + relatedQuiz.difficulty.slice(1)}
-                        </p>
-                      </div>
+              {relatedQuizzes.map((relatedQuiz) => (
+                <a href={`/quizzes/${relatedQuiz.id}`} class="block group">
+                  <div class="flex gap-3">
+                    <div class="text-3xl">{relatedQuiz.thumbnail}</div>
+                    <div>
+                      <h4 class="font-bold text-dark-900 group-hover:text-primary-600 transition-colors text-sm mb-1">
+                        {relatedQuiz.title}
+                      </h4>
+                      <p class="text-xs text-dark-600">
+                        {relatedQuiz.questionsCount} questions • {relatedQuiz.difficulty.charAt(0).toUpperCase() + relatedQuiz.difficulty.slice(1)}
+                      </p>
                     </div>
-                  </a>
-                ))
-              }
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </aside>
