@@ -213,6 +213,16 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ quiz }) => {
         </div>
       </div>
 
+      {/* Ad on question 1, then every 3 questions (1, 3, 6, 9, 12...) */}
+      {((currentQuestionIndex + 1) === 1 || (currentQuestionIndex + 1) % 3 === 0) && (
+        <div className="mb-8 flex justify-center">
+          <AdSlot
+            format="banner"
+            slotId={`quiz-question-ad-${currentQuestionIndex + 1}`}
+          />
+        </div>
+      )}
+
       {/* Question Card */}
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 mb-6">
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-dark-900 mb-8">
@@ -286,16 +296,6 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ quiz }) => {
           </div>
         )}
       </div>
-
-      {/* Ad on question 1, then every 3 questions (1, 3, 6, 9, 12...) */}
-      {showFeedback && ((currentQuestionIndex + 1) === 1 || (currentQuestionIndex + 1) % 3 === 0) && (
-        <div className="my-8 flex justify-center">
-          <AdSlot
-            format="banner"
-            slotId={`quiz-question-ad-${currentQuestionIndex + 1}`}
-          />
-        </div>
-      )}
 
       {/* Score Display */}
       <div className="bg-white rounded-xl shadow p-4 text-center">
