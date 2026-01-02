@@ -38,9 +38,9 @@ const SudokuPlayer: React.FC<SudokuPlayerProps> = ({ difficulty }) => {
   // Hint limits per difficulty
   const maxHints = {
     easy: 7,
-    medium: 5,
-    hard: 3,
-    expert: 2
+    medium: 3,
+    hard: 2,
+    expert: 1
   }[difficulty];
 
   // Generate puzzle on mount
