@@ -8,11 +8,12 @@ export interface HeaderProps {
   className?: string;
 }
 
-const categories: Array<{ name: string; value: QuizCategory; icon: string }> = [
+const categories: Array<{ name: string; value: QuizCategory; icon: string; href?: string }> = [
   { name: 'Trivia', value: 'trivia', icon: '🎯' },
   { name: 'Logic Puzzles', value: 'logic', icon: '🧩' },
   { name: 'Math Games', value: 'math', icon: '🔢' },
-  { name: 'Sudoku', value: 'sudoku', icon: '🎲' },
+  { name: 'Sudoku', value: 'sudoku', icon: '🎲', href: '/sudoku' },
+  { name: 'Daily Sudoku', value: 'sudoku', icon: '🏆', href: '/sudoku/daily' },
   { name: 'Crosswords', value: 'crossword', icon: '📝' },
   { name: 'Riddles', value: 'riddles', icon: '💡' },
   { name: 'Memory Games', value: 'memory', icon: '🧠' },
@@ -135,7 +136,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
                     {categories.map((cat) => (
                       <a
                         key={cat.value}
-                        href={`/category/${cat.value}`}
+                        href={cat.href || `/category/${cat.value}`}
                         className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50 transition-colors group"
                       >
                         <span className="text-2xl group-hover:animate-float">{cat.icon}</span>
@@ -248,7 +249,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
                 {categories.map((cat) => (
                   <a
                     key={cat.value}
-                    href={`/category/${cat.value}`}
+                    href={cat.href || `/category/${cat.value}`}
                     className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-dark-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >

@@ -11,7 +11,6 @@ type SudokuGrid = Cell[][];
 
 interface LeaderboardEntry {
   name: string;
-  score: number;
   time: number;
   mistakes: number;
   date: string;
@@ -181,12 +180,6 @@ const DailySudokuPlayer: React.FC = () => {
     setIsCompleted(false);
   };
 
-  // Calculate score (lower is better)
-  const calculateScore = () => {
-    // Score = time in seconds + (mistakes * 30)
-    return timeElapsed + (mistakes * 30);
-  };
-
   // Load leaderboard from localStorage
   const loadLeaderboard = () => {
     const saved = localStorage.getItem(`sudoku-leaderboard-${todayString}`);
@@ -197,10 +190,8 @@ const DailySudokuPlayer: React.FC = () => {
 
   // Save to leaderboard
   const saveToLeaderboard = (name: string) => {
-    const score = calculateScore();
     const entry: LeaderboardEntry = {
       name,
-      score,
       time: timeElapsed,
       mistakes,
       date: todayString
@@ -209,7 +200,7 @@ const DailySudokuPlayer: React.FC = () => {
     const saved = localStorage.getItem(`sudoku-leaderboard-${todayString}`);
     let currentLeaderboard: LeaderboardEntry[] = saved ? JSON.parse(saved) : [];
     currentLeaderboard.push(entry);
-    currentLeaderboard.sort((a, b) => a.score - b.score);
+    currentLeaderboard.sort((a, b) => a.time - b.time); // Sort by time (lower is better)
     currentLeaderboard = currentLeaderboard.slice(0, 100); // Keep top 100
 
     localStorage.setItem(`sudoku-leaderboard-${todayString}`, JSON.stringify(currentLeaderboard));
@@ -219,7 +210,6 @@ const DailySudokuPlayer: React.FC = () => {
     localStorage.setItem(`sudoku-daily-${todayString}`, JSON.stringify({
       time: timeElapsed,
       mistakes,
-      score,
       name
     }));
   };
@@ -389,7 +379,7 @@ const DailySudokuPlayer: React.FC = () => {
             You completed today's daily challenge!
           </p>
 
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto">
             <div className="bg-primary-50 rounded-xl p-4">
               <p className="text-3xl font-bold text-primary-600">⏱️</p>
               <p className="text-lg font-semibold text-dark-900">{formatTime(timeElapsed)}</p>
@@ -399,11 +389,6 @@ const DailySudokuPlayer: React.FC = () => {
               <p className="text-3xl font-bold text-red-600">❌</p>
               <p className="text-lg font-semibold text-dark-900">{mistakes}</p>
               <p className="text-xs text-dark-600">Mistakes</p>
-            </div>
-            <div className="bg-accent-50 rounded-xl p-4">
-              <p className="text-3xl font-bold text-accent-600">🏆</p>
-              <p className="text-lg font-semibold text-dark-900">{calculateScore()}</p>
-              <p className="text-xs text-dark-600">Score</p>
             </div>
           </div>
 
@@ -463,8 +448,8 @@ const DailySudokuPlayer: React.FC = () => {
                       <span className="font-semibold text-dark-900">{entry.name}</span>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold text-primary-600">{entry.score} pts</p>
-                      <p className="text-xs text-dark-600">{formatTime(entry.time)} • {entry.mistakes} errors</p>
+                      <p className="text-lg font-bold text-primary-600">{formatTime(entry.time)}</p>
+                      <p className="text-xs text-dark-600">{entry.mistakes} mistakes</p>
                     </div>
                   </div>
                 ))}
@@ -490,15 +475,10 @@ const DailySudokuPlayer: React.FC = () => {
     <div className="max-w-4xl mx-auto">
       {/* Daily Challenge Info */}
       <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 mb-6 border-2 border-yellow-400">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-xl font-bold text-dark-900 mb-1">🏆 Daily Challenge</h3>
-            <p className="text-sm text-dark-600">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-dark-600 mb-1">Your Score</p>
-            <p className="text-2xl font-bold text-orange-600">{calculateScore()} pts</p>
-          </div>
+        <div className="text-center">
+          <h3 className="text-xl font-bold text-dark-900 mb-1">🏆 Daily Challenge</h3>
+          <p className="text-sm text-dark-600">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p className="text-xs text-dark-600 mt-2">Complete the puzzle as fast as you can!</p>
         </div>
       </div>
 
