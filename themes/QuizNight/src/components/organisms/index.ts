@@ -17,3 +17,4 @@ export { QuickPlayCTA, type QuickPlayCTAProps } from './QuickPlayCTA';
 export { QuizListSection, type QuizListSectionProps, type Quiz } from './QuizListSection';
 export { BlogSection, type BlogSectionProps } from './BlogSection';
 export { default as QuizPlayer } from './QuizPlayer';
+export { default as SudokuPlayer } from './SudokuPlayer';

@@ -1,0 +1,345 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { AdSlot } from '@components/molecules/AdSlot';
+
+const pageTitle = 'Sudoku Puzzles - LogicLeague';
+const pageDescription = 'Play free Sudoku puzzles online! Choose from Easy, Medium, Hard, and Expert difficulty levels. Sharpen your logic skills with classic 9x9 Sudoku grids.';
+
+// Sudoku difficulty levels
+const difficulties = [
+  {
+    id: 'easy',
+    name: 'Easy',
+    description: 'Perfect for beginners. Learn the basics with generous hints.',
+    color: 'green',
+    icon: '😊',
+    clues: '40-45',
+    estimatedTime: '5-10 min'
+  },
+  {
+    id: 'medium',
+    name: 'Medium',
+    description: 'A balanced challenge for casual players.',
+    color: 'yellow',
+    icon: '🤔',
+    clues: '30-35',
+    estimatedTime: '10-15 min'
+  },
+  {
+    id: 'hard',
+    name: 'Hard',
+    description: 'Test your skills with advanced techniques required.',
+    color: 'orange',
+    icon: '😤',
+    clues: '25-30',
+    estimatedTime: '15-25 min'
+  },
+  {
+    id: 'expert',
+    name: 'Expert',
+    description: 'Only for Sudoku masters. Extremely challenging puzzles.',
+    color: 'red',
+    icon: '🔥',
+    clues: '20-25',
+    estimatedTime: '25-45 min'
+  }
+];
+
+// Features
+const features = [
+  {
+    icon: '✏️',
+    title: 'Pencil Marks',
+    description: 'Take notes with pencil marks to track possibilities'
+  },
+  {
+    icon: '💡',
+    title: 'Smart Hints',
+    description: 'Get helpful hints when you\'re stuck'
+  },
+  {
+    icon: '⏱️',
+    title: 'Timer & Stats',
+    description: 'Track your solving time and improve your skills'
+  },
+  {
+    icon: '↩️',
+    title: 'Undo/Redo',
+    description: 'Easily fix mistakes with unlimited undo'
+  },
+  {
+    icon: '✓',
+    title: 'Auto-Check',
+    description: 'Instant validation to catch errors early'
+  },
+  {
+    icon: '📊',
+    title: 'Progress Save',
+    description: 'Resume your puzzle anytime, anywhere'
+  }
+];
+
+// How to play steps
+const howToPlay = [
+  {
+    step: '1',
+    title: 'Fill the Grid',
+    description: 'Each row must contain numbers 1-9 without repetition'
+  },
+  {
+    step: '2',
+    title: 'Check Columns',
+    description: 'Each column must also contain numbers 1-9 uniquely'
+  },
+  {
+    step: '3',
+    title: 'Complete 3x3 Boxes',
+    description: 'Each of the nine 3x3 boxes must have numbers 1-9'
+  },
+  {
+    step: '4',
+    title: 'Use Logic',
+    description: 'Solve using elimination, patterns, and deduction'
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header client:load />
+
+  <main>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white py-16 sm:py-24 overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-white rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-white rounded-full blur-3xl animate-float-delayed"></div>
+      </div>
+
+      <div class="container-custom relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="text-6xl mb-6 animate-float">🎲</div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6">
+            Play Sudoku Online
+          </h1>
+          <p class="text-xl sm:text-2xl text-white/90 mb-8 leading-relaxed">
+            Challenge your brain with classic 9x9 Sudoku puzzles. From beginner to expert, we have the perfect puzzle for you!
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href="#difficulties"
+              class="px-8 py-4 bg-white text-primary-600 font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+            >
+              Start Playing Now
+            </a>
+            <a
+              href="#how-to-play"
+              class="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-bold rounded-xl hover:bg-white/20 transition-all"
+            >
+              Learn How to Play
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="py-12 bg-white border-b-2 border-dark-100">
+      <div class="container-custom">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div class="text-center">
+            <p class="text-4xl font-display font-bold text-primary-600 mb-2">10,000+</p>
+            <p class="text-sm font-semibold text-dark-700">Unique Puzzles</p>
+          </div>
+          <div class="text-center">
+            <p class="text-4xl font-display font-bold text-secondary-600 mb-2">24/7</p>
+            <p class="text-sm font-semibold text-dark-700">Available</p>
+          </div>
+          <div class="text-center">
+            <p class="text-4xl font-display font-bold text-accent-600 mb-2">100%</p>
+            <p class="text-sm font-semibold text-dark-700">Free to Play</p>
+          </div>
+          <div class="text-center">
+            <p class="text-4xl font-display font-bold text-dark-700 mb-2">4</p>
+            <p class="text-sm font-semibold text-dark-700">Difficulty Levels</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="sudoku-top" />
+      </div>
+    </section>
+
+    <!-- Difficulty Levels -->
+    <section id="difficulties" class="py-16 sm:py-24 bg-gradient-to-br from-white to-dark-50">
+      <div class="container-custom">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl font-display font-bold text-dark-900 mb-4">
+            Choose Your Difficulty
+          </h2>
+          <p class="text-lg text-dark-600 max-w-2xl mx-auto">
+            Select a difficulty level that matches your skills. Each puzzle is carefully crafted to provide the perfect challenge.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {difficulties.map((diff) => (
+            <a
+              href={`/sudoku/play?difficulty=${diff.id}`}
+              class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-primary-300 transform hover:-translate-y-2"
+            >
+              <div class="p-8 text-center">
+                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                  {diff.icon}
+                </div>
+                <h3 class="text-2xl font-display font-bold text-dark-900 mb-2">
+                  {diff.name}
+                </h3>
+                <p class="text-dark-600 text-sm mb-6 h-12">
+                  {diff.description}
+                </p>
+
+                <div class="space-y-3 mb-6">
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-dark-500">Clues:</span>
+                    <span class="font-semibold text-dark-700">{diff.clues}</span>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-dark-500">Time:</span>
+                    <span class="font-semibold text-dark-700">{diff.estimatedTime}</span>
+                  </div>
+                </div>
+
+                <div class={`w-full py-3 rounded-lg font-bold transition-all ${
+                  diff.color === 'green' ? 'bg-green-100 text-green-700 group-hover:bg-green-600 group-hover:text-white' :
+                  diff.color === 'yellow' ? 'bg-yellow-100 text-yellow-700 group-hover:bg-yellow-600 group-hover:text-white' :
+                  diff.color === 'orange' ? 'bg-orange-100 text-orange-700 group-hover:bg-orange-600 group-hover:text-white' :
+                  'bg-red-100 text-red-700 group-hover:bg-red-600 group-hover:text-white'
+                }`}>
+                  Play {diff.name} →
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section class="py-8 bg-white">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="banner" slotId="sudoku-mid" />
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 sm:py-24 bg-white">
+      <div class="container-custom">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl font-display font-bold text-dark-900 mb-4">
+            Premium Features
+          </h2>
+          <p class="text-lg text-dark-600">
+            Everything you need for the perfect Sudoku experience
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {features.map((feature) => (
+            <div class="text-center p-6 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl hover:shadow-lg transition-shadow">
+              <div class="text-5xl mb-4">{feature.icon}</div>
+              <h3 class="text-xl font-bold text-dark-900 mb-2">{feature.title}</h3>
+              <p class="text-dark-600">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Play Section -->
+    <section id="how-to-play" class="py-16 sm:py-24 bg-gradient-to-br from-dark-50 to-white">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-display font-bold text-dark-900 mb-4">
+              How to Play Sudoku
+            </h2>
+            <p class="text-lg text-dark-600">
+              Master the classic puzzle game in 4 simple steps
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6">
+            {howToPlay.map((item) => (
+              <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-primary-100 hover:border-primary-300 transition-colors">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 text-white font-bold text-xl flex items-center justify-center">
+                    {item.step}
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-bold text-dark-900 mb-2">{item.title}</h3>
+                    <p class="text-dark-600">{item.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-12 p-8 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-2xl text-white">
+            <h3 class="text-2xl font-bold mb-4">💡 Pro Tip</h3>
+            <p class="text-lg text-white/90">
+              Start by looking for rows, columns, or boxes that are almost complete. Fill in the easy numbers first, then use process of elimination for the harder ones. With practice, you'll develop pattern recognition skills that make solving faster!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 sm:py-24 bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-float-delayed"></div>
+      </div>
+
+      <div class="container-custom relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl sm:text-4xl font-display font-bold mb-6">
+            Ready to Challenge Your Logic?
+          </h2>
+          <p class="text-xl text-white/90 mb-8">
+            Start playing now and join millions of Sudoku enthusiasts worldwide!
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href="/sudoku/play?difficulty=easy"
+              class="px-8 py-4 bg-white text-primary-600 font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+            >
+              Play Easy Puzzle
+            </a>
+            <a
+              href="/sudoku/play?difficulty=expert"
+              class="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-bold rounded-xl hover:bg-white/20 transition-all"
+            >
+              Try Expert Challenge
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="sudoku-bottom" />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

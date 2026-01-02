@@ -1,0 +1,139 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { AdSlot } from '@components/molecules/AdSlot';
+import SudokuPlayer from '@components/organisms/SudokuPlayer';
+
+// Get difficulty from URL params, default to 'medium'
+const url = new URL(Astro.request.url);
+const difficulty = (url.searchParams.get('difficulty') || 'medium') as 'easy' | 'medium' | 'hard' | 'expert';
+
+// Validate difficulty
+const validDifficulties = ['easy', 'medium', 'hard', 'expert'];
+if (!validDifficulties.includes(difficulty)) {
+  return Astro.redirect('/sudoku');
+}
+
+const pageTitle = `Play ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Sudoku - LogicLeague`;
+const pageDescription = `Challenge yourself with a ${difficulty} Sudoku puzzle. Use logic and strategy to fill the 9x9 grid with numbers 1-9.`;
+
+const difficultyEmoji = {
+  easy: '😊',
+  medium: '🤔',
+  hard: '😤',
+  expert: '🔥'
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header client:load />
+
+  <main>
+    <!-- Page Header -->
+    <section class="bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white py-12">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="text-5xl mb-4">{difficultyEmoji[difficulty]}</div>
+          <h1 class="text-3xl sm:text-4xl font-display font-bold mb-2">
+            {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Sudoku
+          </h1>
+          <p class="text-white/90">
+            Fill the 9×9 grid so each row, column, and 3×3 box contains 1-9
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="sudoku-play-top" />
+      </div>
+    </section>
+
+    <!-- Sudoku Game -->
+    <section class="py-8 sm:py-12 bg-gradient-to-br from-white to-dark-50">
+      <div class="container-custom">
+        <SudokuPlayer client:load difficulty={difficulty} />
+      </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="py-12 bg-white">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-2xl font-display font-bold text-dark-900 mb-6 text-center">
+            Sudoku Tips & Tricks
+          </h2>
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="bg-primary-50 rounded-xl p-6">
+              <h3 class="font-bold text-lg text-dark-900 mb-2">🎯 Scanning Technique</h3>
+              <p class="text-dark-600 text-sm">
+                Look for rows, columns, or boxes that are almost complete. These are the easiest to fill in first.
+              </p>
+            </div>
+            <div class="bg-secondary-50 rounded-xl p-6">
+              <h3 class="font-bold text-lg text-dark-900 mb-2">✏️ Use Pencil Marks</h3>
+              <p class="text-dark-600 text-sm">
+                Write small numbers in cells to track possibilities. This helps visualize potential candidates.
+              </p>
+            </div>
+            <div class="bg-accent-50 rounded-xl p-6">
+              <h3 class="font-bold text-lg text-dark-900 mb-2">🔍 Process of Elimination</h3>
+              <p class="text-dark-600 text-sm">
+                If a number appears in a row or column, eliminate it from that row/column in its 3×3 box.
+              </p>
+            </div>
+            <div class="bg-dark-50 rounded-xl p-6">
+              <h3 class="font-bold text-lg text-dark-900 mb-2">🧠 Naked Pairs</h3>
+              <p class="text-dark-600 text-sm">
+                If two cells in a row/column can only contain the same two numbers, eliminate those numbers from other cells.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="banner" slotId="sudoku-play-mid" />
+      </div>
+    </section>
+
+    <!-- Other Difficulties CTA -->
+    <section class="py-12 bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white">
+      <div class="container-custom">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl font-display font-bold mb-4">
+            Try Different Difficulties
+          </h2>
+          <p class="text-white/90 mb-8">
+            Challenge yourself with puzzles ranging from beginner-friendly to expert-level
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            {validDifficulties.filter(d => d !== difficulty).map(diff => (
+              <a
+                href={`/sudoku/play?difficulty=${diff}`}
+                class="px-6 py-3 bg-white text-primary-600 font-bold rounded-lg hover:bg-white/90 transition-all shadow-lg"
+              >
+                Play {diff.charAt(0).toUpperCase() + diff.slice(1)}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="sudoku-play-bottom" />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
