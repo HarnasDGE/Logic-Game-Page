@@ -1,5 +1,7 @@
 ---
-import Layout from '@layouts/Layout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
 import { AdSlot } from '@components/molecules/AdSlot';
 
 const pageTitle = 'About Us - LogicLeague';
@@ -80,7 +82,11 @@ const featuredQuizzes = [
 ];
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- Header -->
+  <Header client:load />
+
+  <main>
   <!-- Hero Section -->
   <section class="relative bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white py-20 sm:py-32 overflow-hidden">
     <!-- Animated background elements -->
@@ -466,4 +472,8 @@ const featuredQuizzes = [
       <AdSlot client:visible format="leaderboard" slotId="about-page-bottom" />
     </div>
   </section>
-</Layout>
+  </main>
+
+  <!-- Footer -->
+  <Footer />
+</BaseLayout>
