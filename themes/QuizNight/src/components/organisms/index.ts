@@ -18,3 +18,4 @@ export { QuizListSection, type QuizListSectionProps, type Quiz } from './QuizLis
 export { BlogSection, type BlogSectionProps } from './BlogSection';
 export { default as QuizPlayer } from './QuizPlayer';
 export { default as SudokuPlayer } from './SudokuPlayer';
+export { default as DailySudokuPlayer } from './DailySudokuPlayer';

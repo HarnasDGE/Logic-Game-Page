@@ -1,0 +1,164 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { AdSlot } from '@components/molecules/AdSlot';
+import DailySudokuPlayer from '@components/organisms/DailySudokuPlayer';
+
+const pageTitle = 'Daily Sudoku Challenge - LogicLeague';
+const pageDescription = 'Complete today\'s Sudoku challenge and compete on the global leaderboard! One puzzle per day, test your skills against players worldwide.';
+
+const today = new Date().toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header client:load />
+
+  <main>
+    <!-- Page Header -->
+    <section class="bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500 text-white py-12">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="text-5xl mb-4">🏆</div>
+          <h1 class="text-3xl sm:text-4xl font-display font-bold mb-2">
+            Daily Sudoku Challenge
+          </h1>
+          <p class="text-white/90 text-lg mb-2">
+            {today}
+          </p>
+          <p class="text-white/80">
+            Complete today's puzzle and climb the leaderboard!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-12 bg-white">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-2xl font-display font-bold text-dark-900 mb-6 text-center">
+            How Daily Challenge Works
+          </h2>
+          <div class="grid sm:grid-cols-3 gap-6">
+            <div class="text-center p-6 bg-primary-50 rounded-xl">
+              <div class="text-4xl mb-3">📅</div>
+              <h3 class="font-bold text-lg text-dark-900 mb-2">One Puzzle Daily</h3>
+              <p class="text-sm text-dark-600">Everyone gets the same puzzle each day. New challenge arrives at midnight!</p>
+            </div>
+            <div class="text-center p-6 bg-secondary-50 rounded-xl">
+              <div class="text-4xl mb-3">🏆</div>
+              <h3 class="font-bold text-lg text-dark-900 mb-2">Compete Globally</h3>
+              <p class="text-sm text-dark-600">Your score is based on time and mistakes. Compete with players worldwide!</p>
+            </div>
+            <div class="text-center p-6 bg-accent-50 rounded-xl">
+              <div class="text-4xl mb-3">✅</div>
+              <h3 class="font-bold text-lg text-dark-900 mb-2">Once Per Day</h3>
+              <p class="text-sm text-dark-600">You can only complete each daily challenge once. Make every move count!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="daily-sudoku-top" />
+      </div>
+    </section>
+
+    <!-- Daily Sudoku Game -->
+    <section class="py-8 sm:py-12 bg-gradient-to-br from-white to-dark-50">
+      <div class="container-custom">
+        <DailySudokuPlayer client:load />
+      </div>
+    </section>
+
+    <!-- Scoring Info -->
+    <section class="py-12 bg-white">
+      <div class="container-custom">
+        <div class="max-w-3xl mx-auto bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8">
+          <h3 class="text-2xl font-bold text-dark-900 mb-4 text-center">📊 How Scoring Works</h3>
+          <div class="space-y-4 text-dark-700">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">⏱️</span>
+              <div>
+                <p class="font-bold">Time Matters</p>
+                <p class="text-sm">Your completion time in seconds directly affects your score</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">❌</span>
+              <div>
+                <p class="font-bold">Mistakes Penalized</p>
+                <p class="text-sm">Each mistake adds 30 seconds to your score</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🏆</span>
+              <div>
+                <p class="font-bold">Lower Score Wins</p>
+                <p class="text-sm">Formula: Time (seconds) + (Mistakes × 30)</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 p-4 bg-white rounded-xl border-2 border-primary-200">
+            <p class="text-sm text-center text-dark-700">
+              <strong>Example:</strong> 5 minutes (300s) + 2 mistakes = 300 + 60 = <strong class="text-primary-600">360 points</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="banner" slotId="daily-sudoku-mid" />
+      </div>
+    </section>
+
+    <!-- CTA to Regular Sudoku -->
+    <section class="py-16 bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white">
+      <div class="container-custom">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl font-display font-bold mb-4">
+            Want More Practice?
+          </h2>
+          <p class="text-white/90 mb-8">
+            Play unlimited Sudoku puzzles at any difficulty level
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href="/sudoku"
+              class="px-8 py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-white/90 transition-all shadow-lg"
+            >
+              Play Random Sudoku
+            </a>
+            <a
+              href="/sudoku/play?difficulty=easy"
+              class="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-bold rounded-xl hover:bg-white/20 transition-all"
+            >
+              Practice Mode
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId="daily-sudoku-bottom" />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
