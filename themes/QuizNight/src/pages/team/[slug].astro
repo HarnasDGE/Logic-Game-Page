@@ -1,0 +1,539 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Header } from '@components/organisms/Header';
+import { Footer } from '@components/organisms/Footer';
+import { AdSlot } from '@components/molecules/AdSlot';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'emma-richardson' } },
+    { params: { slug: 'marcus-chen' } },
+    { params: { slug: 'sofia-kowalski' } },
+  ];
+}
+
+const { slug } = Astro.params;
+
+// Team members data
+const teamData: Record<string, any> = {
+  'emma-richardson': {
+    name: 'Dr. Emma Richardson',
+    role: 'Chief Quiz Architect',
+    pronouns: 'she/her',
+    languages: ['English', 'Spanish', 'French'],
+    location: 'London, United Kingdom',
+    bio: 'With a PhD in Educational Psychology from Cambridge University and 12 years of experience in game design, Emma leads our quiz creation team with unparalleled expertise. Her innovative approach combines cognitive science with entertainment, ensuring every puzzle challenges your mind while keeping you engaged.',
+    longBio: 'Dr. Emma Richardson\'s journey into quiz design began during her doctoral research on gamification in education. She discovered that well-crafted puzzles could improve memory retention by up to 340% compared to traditional learning methods. This revelation sparked her passion for creating brain games that are both educational and addictive.\n\nBefore joining LogicLeague, Emma worked as Lead Game Designer at two major educational technology companies, where she pioneered adaptive difficulty algorithms that personalize quiz experiences. Her work has been featured in journals like "Cognitive Science Today" and "Digital Learning Review."\n\nEmma has designed over 5,000 quizzes that have been played by millions worldwide. Her specialty lies in logic puzzles and trivia that make complex subjects accessible and fun. When she\'s not crafting the perfect question, you\'ll find her competing in pub quiz championships across Europe.',
+    expertise: ['Logic Puzzle Design', 'Educational Gaming', 'Cognitive Science', 'Adaptive Difficulty Systems', 'Gamification Theory'],
+    achievements: [
+      {
+        title: '5,000+ Quizzes Created',
+        description: 'Designed and published over 5,000 expert-level quizzes',
+        icon: '🎯'
+      },
+      {
+        title: 'PhD in Educational Psychology',
+        description: 'Cambridge University, specializing in gamification',
+        icon: '🎓'
+      },
+      {
+        title: '10M+ Quiz Plays',
+        description: 'Her quizzes have been completed over 10 million times',
+        icon: '🏆'
+      },
+      {
+        title: 'Published Researcher',
+        description: 'Author of 15+ academic papers on game-based learning',
+        icon: '📚'
+      }
+    ],
+    stats: {
+      quizzesCreated: 5247,
+      totalPlays: 10500000,
+      avgRating: 4.9,
+      yearsExperience: 12
+    },
+    socialLinks: {
+      linkedin: '#',
+      twitter: '#',
+      email: 'emma@logicleague.com'
+    },
+    featuredQuizzes: [
+      {
+        id: '1',
+        title: 'World Capitals Challenge',
+        category: 'Geography',
+        difficulty: 'medium',
+        plays: 15420,
+        rating: 4.8,
+        thumbnail: '🌍'
+      },
+      {
+        id: '4',
+        title: 'Classic Brain Teasers',
+        category: 'Logic',
+        difficulty: 'hard',
+        plays: 21000,
+        rating: 4.9,
+        thumbnail: '🧩'
+      },
+      {
+        id: '7',
+        title: 'Science Fundamentals Quiz',
+        category: 'Science',
+        difficulty: 'medium',
+        plays: 12800,
+        rating: 4.7,
+        thumbnail: '🔬'
+      }
+    ]
+  },
+  'marcus-chen': {
+    name: 'Marcus Chen',
+    role: 'Lead Content Strategist',
+    pronouns: 'he/him',
+    languages: ['English', 'Mandarin', 'Japanese'],
+    location: 'Singapore',
+    bio: 'A former competitive quiz champion with victories in national trivia tournaments across three continents, Marcus brings unparalleled expertise in content curation. His meticulous attention to detail and vast knowledge base ensure every fact is verified and every question is perfectly balanced for difficulty and engagement.',
+    longBio: 'Marcus Chen\'s love for trivia began at age 8 when he won his first school quiz competition. By 25, he had claimed championship titles at the Asian Trivia Masters, Singapore Quiz Bowl, and the International Knowledge Olympics.\n\nHis competitive background gives him unique insight into what makes a great quiz question. Marcus understands the perfect balance between challenge and fairness, ensuring players feel rewarded for their knowledge while still learning something new.\n\nAt LogicLeague, Marcus oversees all content quality and fact-checking. Every quiz passes through his rigorous verification process, where claims are cross-referenced with multiple authoritative sources. His multilingual abilities allow him to source fascinating trivia from cultures around the world, making our quizzes truly global in scope.\n\nMarcus holds records for the fastest completion times on several LogicLeague quizzes and occasionally hides easter eggs in his questions for eagle-eyed players to discover.',
+    expertise: ['Trivia Curation', 'Difficulty Balancing', 'Competitive Gaming', 'Fact-Checking', 'Cross-Cultural Content'],
+    achievements: [
+      {
+        title: 'National Champion',
+        description: 'Winner of 12 national and international quiz tournaments',
+        icon: '🏆'
+      },
+      {
+        title: '8,000+ Questions Curated',
+        description: 'Personally researched and verified thousands of trivia questions',
+        icon: '✍️'
+      },
+      {
+        title: '99.8% Accuracy Rate',
+        description: 'Industry-leading fact-checking accuracy across all content',
+        icon: '✓'
+      },
+      {
+        title: 'Polyglot Expert',
+        description: 'Fluent in 3 languages, conversational in 2 more',
+        icon: '🌏'
+      }
+    ],
+    stats: {
+      quizzesCreated: 3892,
+      totalPlays: 8200000,
+      avgRating: 4.8,
+      yearsExperience: 9
+    },
+    socialLinks: {
+      linkedin: '#',
+      twitter: '#',
+      email: 'marcus@logicleague.com'
+    },
+    featuredQuizzes: [
+      {
+        id: '2',
+        title: 'Math Masters: Speed Challenge',
+        category: 'Mathematics',
+        difficulty: 'hard',
+        plays: 12350,
+        rating: 4.9,
+        thumbnail: '🔢'
+      },
+      {
+        id: '8',
+        title: 'World History Deep Dive',
+        category: 'History',
+        difficulty: 'hard',
+        plays: 9500,
+        rating: 4.8,
+        thumbnail: '📜'
+      },
+      {
+        id: '11',
+        title: 'Asian Culture & Traditions',
+        category: 'Culture',
+        difficulty: 'medium',
+        plays: 7200,
+        rating: 4.7,
+        thumbnail: '🏮'
+      }
+    ]
+  },
+  'sofia-kowalski': {
+    name: 'Sofia Kowalski',
+    role: 'Community & Engagement Director',
+    pronouns: 'she/her',
+    languages: ['English', 'Polish', 'German', 'Italian'],
+    location: 'Berlin, Germany',
+    bio: 'Sofia\'s background in gamification and user experience design has revolutionized how players interact with LogicLeague. With expertise spanning four languages and cultures, she crafts experiences that resonate globally. Her community-first approach has built a thriving ecosystem of over 2 million active players who return daily.',
+    longBio: 'Sofia Kowalski is the heart and soul of LogicLeague\'s community. With a Master\'s degree in Human-Computer Interaction from TU Berlin and 8 years in UX design, she brings both scientific rigor and creative flair to every player interaction.\n\nBefore LogicLeague, Sofia led gamification initiatives at a major social platform, where she increased daily active users by 250% through innovative engagement mechanics. Her expertise in behavioral psychology helps design reward systems that feel genuinely satisfying without being manipulative.\n\nSofia pioneered LogicLeague\'s daily challenge system, streak rewards, and achievement badges—features that players cite as their favorite aspects of the platform. She personally reads hundreds of player comments each week, ensuring the community\'s voice shapes product decisions.\n\nFluent in four languages, Sofia oversees localization efforts and ensures cultural sensitivity across all content. She hosts monthly community events and has built a global network of quiz enthusiasts who create user-generated content for the platform.',
+    expertise: ['Gamification', 'UX Design', 'Community Building', 'Behavioral Psychology', 'Localization'],
+    achievements: [
+      {
+        title: '2M+ Active Players',
+        description: 'Built and nurtured a thriving community of 2 million players',
+        icon: '👥'
+      },
+      {
+        title: 'UX Design Award Winner',
+        description: 'Won "Best Gamification Design 2024" at European UX Awards',
+        icon: '🏅'
+      },
+      {
+        title: '4 Languages Fluent',
+        description: 'Enables truly global content and community management',
+        icon: '🌍'
+      },
+      {
+        title: '85% Retention Rate',
+        description: 'Industry-leading 30-day player retention through engagement design',
+        icon: '📈'
+      }
+    ],
+    stats: {
+      quizzesCreated: 2156,
+      totalPlays: 6800000,
+      avgRating: 4.9,
+      yearsExperience: 8
+    },
+    socialLinks: {
+      linkedin: '#',
+      twitter: '#',
+      email: 'sofia@logicleague.com'
+    },
+    featuredQuizzes: [
+      {
+        id: '3',
+        title: 'Movie Trivia Madness',
+        category: 'Entertainment',
+        difficulty: 'easy',
+        plays: 18900,
+        rating: 4.7,
+        thumbnail: '🎬'
+      },
+      {
+        id: '10',
+        title: 'What\'s Your Learning Style?',
+        category: 'Personality',
+        difficulty: 'easy',
+        plays: 42000,
+        rating: 4.9,
+        thumbnail: '📚'
+      },
+      {
+        id: '14',
+        title: 'European Cultures Quiz',
+        category: 'Culture',
+        difficulty: 'medium',
+        plays: 11500,
+        rating: 4.8,
+        thumbnail: '🇪🇺'
+      }
+    ]
+  }
+};
+
+const author = teamData[slug];
+
+if (!author) {
+  return Astro.redirect('/about');
+}
+
+const pageTitle = `${author.name} - ${author.role} | LogicLeague Team`;
+const pageDescription = `Meet ${author.name}, our ${author.role}. ${author.bio}`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header client:load />
+
+  <main>
+    <!-- Hero Section with Author Profile -->
+    <section class="relative bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white py-16 sm:py-24 overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-white rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-white rounded-full blur-3xl animate-float-delayed"></div>
+      </div>
+
+      <div class="container-custom relative z-10">
+        <div class="max-w-5xl mx-auto">
+          <div class="grid lg:grid-cols-3 gap-8 items-start">
+            <!-- Profile Image -->
+            <div class="lg:col-span-1">
+              <div class="relative w-full aspect-square max-w-sm mx-auto">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary-200 via-secondary-200 to-accent-200 rounded-3xl overflow-hidden shadow-2xl">
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-9xl opacity-30">👤</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="lg:col-span-2">
+              <div class="mb-4">
+                <a href="/about" class="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm mb-4">
+                  <span>←</span>
+                  <span>Back to Team</span>
+                </a>
+              </div>
+
+              <h1 class="text-4xl sm:text-5xl font-display font-bold mb-2">
+                {author.name}
+              </h1>
+              <p class="text-2xl text-accent-300 font-semibold mb-4">
+                {author.role}
+              </p>
+
+              <div class="flex flex-wrap gap-4 mb-6 text-sm">
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span>📍</span>
+                  <span>{author.location}</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span>💼</span>
+                  <span>{author.yearsExperience} years experience</span>
+                </div>
+              </div>
+
+              <!-- Languages -->
+              <div class="mb-6">
+                <p class="text-sm font-semibold text-white/80 mb-2">Languages:</p>
+                <div class="flex flex-wrap gap-2">
+                  {author.languages.map((lang: string) => (
+                    <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
+                      {lang}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Short Bio -->
+              <p class="text-lg text-white/90 leading-relaxed mb-6">
+                {author.bio}
+              </p>
+
+              <!-- Social Links -->
+              <div class="flex gap-3">
+                <a
+                  href={author.socialLinks.linkedin}
+                  class="px-6 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-white/90 transition-all shadow-lg"
+                >
+                  💼 LinkedIn
+                </a>
+                <a
+                  href={author.socialLinks.twitter}
+                  class="px-6 py-3 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold rounded-lg hover:bg-white/20 transition-all"
+                >
+                  🐦 Twitter
+                </a>
+                <a
+                  href={`mailto:${author.socialLinks.email}`}
+                  class="px-6 py-3 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold rounded-lg hover:bg-white/20 transition-all"
+                >
+                  ✉️ Email
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white border-b-2 border-dark-100">
+      <div class="container-custom">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div class="text-center p-6 bg-primary-50 rounded-2xl">
+            <p class="text-4xl font-display font-bold text-primary-600 mb-2">
+              {author.stats.quizzesCreated.toLocaleString()}
+            </p>
+            <p class="text-sm font-semibold text-dark-700">Quizzes Created</p>
+          </div>
+          <div class="text-center p-6 bg-secondary-50 rounded-2xl">
+            <p class="text-4xl font-display font-bold text-secondary-600 mb-2">
+              {(author.stats.totalPlays / 1000000).toFixed(1)}M+
+            </p>
+            <p class="text-sm font-semibold text-dark-700">Total Plays</p>
+          </div>
+          <div class="text-center p-6 bg-accent-50 rounded-2xl">
+            <p class="text-4xl font-display font-bold text-accent-600 mb-2">
+              {author.stats.avgRating} ⭐
+            </p>
+            <p class="text-sm font-semibold text-dark-700">Average Rating</p>
+          </div>
+          <div class="text-center p-6 bg-dark-50 rounded-2xl">
+            <p class="text-4xl font-display font-bold text-dark-700 mb-2">
+              {author.stats.yearsExperience}+
+            </p>
+            <p class="text-sm font-semibold text-dark-700">Years Experience</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId={`author-${slug}-top`} />
+      </div>
+    </section>
+
+    <!-- Full Bio & Expertise -->
+    <section class="py-16 sm:py-24 bg-white">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl sm:text-4xl font-display font-bold text-dark-900 mb-8">
+            About {author.name.split(' ')[0]}
+          </h2>
+
+          <div class="prose prose-lg max-w-none mb-12">
+            {author.longBio.split('\n\n').map((paragraph: string) => (
+              <p class="text-dark-700 leading-relaxed mb-6">{paragraph}</p>
+            ))}
+          </div>
+
+          <!-- Expertise -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-display font-bold text-dark-900 mb-6">Areas of Expertise</h3>
+            <div class="flex flex-wrap gap-3">
+              {author.expertise.map((skill: string) => (
+                <span class="px-4 py-2 bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700 rounded-xl text-sm font-semibold border-2 border-primary-200">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div>
+            <h3 class="text-2xl font-display font-bold text-dark-900 mb-6">Key Achievements</h3>
+            <div class="grid sm:grid-cols-2 gap-6">
+              {author.achievements.map((achievement: any) => (
+                <div class="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-6 border-2 border-primary-100">
+                  <div class="text-5xl mb-4">{achievement.icon}</div>
+                  <h4 class="text-lg font-bold text-dark-900 mb-2">{achievement.title}</h4>
+                  <p class="text-dark-600">{achievement.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="banner" slotId={`author-${slug}-mid`} />
+      </div>
+    </section>
+
+    <!-- Featured Quizzes -->
+    <section class="py-16 sm:py-24 bg-gradient-to-br from-dark-50 to-white">
+      <div class="container-custom">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-display font-bold text-dark-900 mb-4">
+              Featured Quizzes by {author.name.split(' ')[0]}
+            </h2>
+            <p class="text-lg text-dark-600">
+              Try some of the most popular quizzes created by {author.name.split(' ')[0]}
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-3 gap-6 mb-12">
+            {author.featuredQuizzes.map((quiz: any) => (
+              <a
+                href={`/quizzes/${quiz.id}`}
+                class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-primary-300 transform hover:-translate-y-1"
+              >
+                <div class="p-6">
+                  <div class="text-6xl mb-4 text-center group-hover:scale-110 transition-transform">
+                    {quiz.thumbnail}
+                  </div>
+                  <h3 class="text-lg font-bold text-dark-900 mb-2 group-hover:text-primary-600 transition-colors">
+                    {quiz.title}
+                  </h3>
+                  <div class="flex items-center justify-between text-sm mb-4">
+                    <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full font-medium">
+                      {quiz.category}
+                    </span>
+                    <span class={
+                      quiz.difficulty === 'easy' ? 'text-green-600 font-semibold' :
+                      quiz.difficulty === 'medium' ? 'text-yellow-600 font-semibold' :
+                      'text-red-600 font-semibold'
+                    }>
+                      {quiz.difficulty}
+                    </span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs text-dark-600">
+                    <span>⭐ {quiz.rating}</span>
+                    <span>👥 {quiz.plays.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div class="px-6 pb-6">
+                  <div class="w-full py-2 bg-primary-600 group-hover:bg-primary-700 text-white text-center rounded-lg font-semibold transition-colors">
+                    Play Now →
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div class="text-center">
+            <a
+              href="/quizzes"
+              class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+            >
+              <span>Explore All Quizzes</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 sm:py-24 bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-float-delayed"></div>
+      </div>
+
+      <div class="container-custom relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl sm:text-4xl font-display font-bold mb-6">
+            Want to Connect with {author.name.split(' ')[0]}?
+          </h2>
+          <p class="text-xl text-white/90 mb-8">
+            Have questions about quiz design or want to collaborate? Reach out today!
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href={`mailto:${author.socialLinks.email}`}
+              class="px-8 py-4 bg-white text-primary-600 font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+            >
+              Send an Email
+            </a>
+            <a
+              href="/about"
+              class="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-bold rounded-xl hover:bg-white/20 transition-all"
+            >
+              Meet the Full Team
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Ad -->
+    <section class="py-8 bg-dark-50">
+      <div class="container-custom flex justify-center">
+        <AdSlot client:visible format="leaderboard" slotId={`author-${slug}-bottom`} />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
